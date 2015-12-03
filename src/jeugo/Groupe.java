@@ -8,19 +8,13 @@ package jeugo;
 import java.util.ArrayList;
 
 /**
- *
- * @author solenemoreau
+ * Une liste de pieces dont on peut connaitre le nombre de libertes et d'oeils
+ * @author solenemoreau, sacha
  */
-public class Groupe {
-    
-    private ArrayList<Piece> pieces;
+public class Groupe extends ArrayList<Piece> {
 
-    public ArrayList<Piece> getPieces() {
-        return pieces;
-    }
-
-    public void setPieces(ArrayList<Piece> pieces) {
-        this.pieces = pieces;
+    public int getLibertes(){
+        return 0;
     }
     
     
