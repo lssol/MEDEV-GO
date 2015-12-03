@@ -5,27 +5,39 @@
  */
 package jeugo;
 
+import jeugo.exceptions.PasDePlateaudeCetteTaille;
+
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  *
  * @author Sacha
  */
 public final class PlateauDeJeu {
-    Piece pieces[][];
+    Piece[][] pieces;
     int width;
     String jBlanc;
     String jNoir;
     int handicap;
-    ArrayList<Integer> taillesOk;
+    List<Integer> taillesOk;
     
     /**
      * Crée un plateau de la taille indiquée dans width, refuse de le créer si la taille ne fait pas partie des tailles acceptées
      * @param width 
      */
-    public PlateauDeJeu(int width) {
-        this.taillesOk = new ArrayList<>();
-       
+    public PlateauDeJeu(int width) throws PasDePlateaudeCetteTaille {
+        this.taillesOk = Arrays.asList(9, 16, 19);
+
+        if(!taillesOk.contains((Integer) width)){
+            throw new PasDePlateaudeCetteTaille(width);
+        }
+        else {
+            this.width = width;
+            pieces = new Piece[width][width];
+
+        }
     }
    
     /**
