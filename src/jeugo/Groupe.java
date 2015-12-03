@@ -7,12 +7,15 @@ package jeugo;
 
 import java.util.ArrayList;
 
-/**
+/** Classe pour décrire un groupe de pièces
  *
  * @author solenemoreau
  */
 public class Groupe {
     
+    /**
+     * liste des pièces dans le groupe
+     */
     private ArrayList<Piece> pieces;
 
     public ArrayList<Piece> getPieces() {
