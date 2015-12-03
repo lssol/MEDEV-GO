@@ -16,6 +16,11 @@ public class Vue {
     public void afficherInformation(String info){
 
     }
+
+    /**
+     * Demande les noms des joueurs aux joueurs et les renvois
+     * @return La première case est le nom du blanc, la seconde, le nom du noir
+     */
     public String[] demanderNomsJoueurs(){
         String[] s = {};
         return s;
