@@ -17,17 +17,22 @@ import java.util.List;
  * @author Sacha
  */
 public final class PlateauDeJeu {
-    Piece[][] pieces;
-    int width;
+    static Piece[][] pieces;
+    static int width;
     String jBlanc;
     String jNoir;
     int handicap;
     List<Integer> taillesOk;
     List<Groupe> groupes;
-
+    /**
+     * Groupe tampon pour ameliorer les performances
+     */
+    List<Groupe> groupesTampon;
+    Vue vue;
 
     /**
      * Crée un plateau de la taille indiquée dans width, refuse de le créer si la taille ne fait pas partie des tailles acceptées
+     * On demande leur nom aux joueurs
      * @param width 
      */
     public PlateauDeJeu(int width) throws PasDePlateaudeCetteTaille {
@@ -39,16 +44,51 @@ public final class PlateauDeJeu {
         else {
             this.width = width;
             pieces = new Piece[width][width];
-
         }
+        vue = new Vue();
+        String[] noms = vue.demanderNomsJoueurs();
+        jBlanc = noms[0];
+        jNoir = noms[1];
     }
    
     /**
-     * Decris un tour de jeu
+     * Decris un tour de jeu, pour l'instant, on ne termine pas le jeu donc c'est simplement
+     * Le joueur Blanc joue
+     * On supprime les pions qui doivent être supprimés
+     * Le joueur Noir joue
+     * On supprime les pions qui doivent être supprimés
      */
     public void tourDeJeu(){
-        
+        //Les blancs jouent
+        jouer(true);
+        supprimerGroupes();
+
+        //Les noirs
+        jouer(false);
+        supprimerGroupes();
     }
+
+    /**
+     * Supprime les groupes qui n'ont plus de libertes... :'(
+     * On n'analyse que les groupes qui sont dans le tampon, ce qui permet d'eviter de parcourir tous les groupes
+     * (Remarque :pas besoin de transmettre la couleur, grâce au systeme de tampon)
+     */
+    private void supprimerGroupes() {
+        for(Groupe groupe : groupesTampon) {
+            if (groupe.getLibertes() == 0) {
+                groupes.remove(groupe);
+            }
+        }
+    }
+
+    /**
+     * Un joueur joue (interaction avec l'utilisateur via Affichage)
+     * @param couleur est la couleur qui joue : true = blanc
+     */
+    private void jouer(boolean couleur) {
+
+    }
+
     /**
      * Cree une copie de la matrice, insere la piece, Met à jour les groupes, 
      * verifie les libertes et met à jour ou non la vrai matrice, selon que l'insertion est légale
@@ -56,13 +96,13 @@ public final class PlateauDeJeu {
      * @param pos la position de la pièce ([x,y])
      * @return true si l'insertion a reussi, false sinon
      */
-    public boolean insererPiece(int[] pos, boolean couleur) throws AhYaDejaQuelquUnIci {
+    public void insererPiece(int[] pos, boolean couleur) throws AhYaDejaQuelquUnIci {
         int x  = pos[0];
         int y = pos[1];
+        groupesTampon = new ArrayList<Groupe>(); // On reinitialise le tampon facilement, beni soit le garbage collector....
 
         if(pieces[x][y] != null){
             throw new AhYaDejaQuelquUnIci(pos);
-            return false;
         }
 
         Piece[][] copie = pieces.clone();
@@ -74,12 +114,12 @@ public final class PlateauDeJeu {
         for(Piece piece : getPiecesAutourDe(pos)){
             if(piece.getCouleur() == couleur){
                 nouveauGroupe.addAll(piece.getGroupe());
-                groupes.removeAll(piece.getGroupe());
+                groupes.remove(piece.getGroupe());
             }
+            else
+                groupesTampon.add(piece.getGroupe()); // Permet une amélioration de performances, c'est intelligent.
         }
         groupes.add(nouveauGroupe);
-
-        return true;
     }
 
     /**
@@ -100,6 +140,12 @@ public final class PlateauDeJeu {
 
         return liste;
     }
-    
-    
+
+    public static Piece[][] getPieces() {
+        return pieces;
+    }
+
+    public static int getWidth() {
+        return width;
+    }
 }
