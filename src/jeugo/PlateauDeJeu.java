@@ -5,7 +5,6 @@
  */
 package jeugo;
 
-import jeugo.exceptions.AhYaDejaQuelquUnIci;
 import jeugo.exceptions.PasDePlateaudeCetteTaille;
 
 import java.util.ArrayList;
@@ -85,11 +84,9 @@ public final class PlateauDeJeu {
     public void tourDeJeu(){
         //Les blancs jouent
         jouer(true);
-        supprimerGroupes();
 
         //Les noirs
         jouer(false);
-        supprimerGroupes();
     }
 
     /**
@@ -109,44 +106,65 @@ public final class PlateauDeJeu {
      * Un joueur joue (interaction avec l'utilisateur via Affichage)
      * @param couleur est la couleur qui joue : true = blanc
      */
-    private void jouer(boolean couleur) {
-        // demander la position ou passer
+    private void jouer(boolean couleur){
+        Vue vue = new Vue();
+        vue.afficherPlateau();
         
-        // vérifier la position 
-        // si position incorrecte : redemander 
+        // demander la position ou placer la pièce
+        // vérifier la position : tant que la position incorrecte - redemander 
+        Position pos = new Position();
+        boolean posOK = false;
+        while (posOK){
+            pos = vue.demanderPosition();
+            // posOK = this.verifierPosition(pos);
+        }
         
-        // inserer pièce à la position choisie
+        this.insererPiece(pos, couleur);
         
         // supprimer les groupes sans liberté
+        supprimerGroupes();
         
         // enregister l'état du plateau dans historique
         // enregister le mouvement dans le fichier texte
+        historique.sauvegarde();
 
     }
     
     /**
-     * Cree une copie de la matrice, insere la piece, Met à jour les groupes, 
-     * verifie les libertes et met à jour ou non la vrai matrice, selon que 
-     * l'insertion est légale
-     * @param pos la position de la pièce
-     * @return true si l'insertion a reussi, false sinon
+     * vérifie la conformité d'une position choisie avec les règles du GO
+     * - regle de Ko (historique)
+     * - a des libertés
+     * - si pas de liberté : vérif que groupe tampon est supprimé : si oui -> true 
+     * @param p position a tester
+     * @param couleur joueur en train de poser une pièce
+     * @return true si la position est compatible avec les règles
      */
-    public void insererPiece(Position pos, boolean couleur) throws AhYaDejaQuelquUnIci {
-        int x  = pos.getX();
-        int y = pos.getY();
-        groupesTampon = new ArrayList<Groupe>(); // On reinitialise le tampon facilement, beni soit le garbage collector....
-
-        if(pieces[x][y] != null){
-            throw new AhYaDejaQuelquUnIci(pos);
-        }
+    public boolean verifierPosition(Position p, boolean couleur){
+ 
 /* Pour après, pour pouvoir empecher de mettre à certaines places
         Piece[][] copie = pieces.clone();
         copie[x][y] = new Piece(couleur);
 */
-        pieces[x][y] = new Piece(couleur,pos);
+        
+        return true;
+    }
+    
+    /**
+     * Positionne une pièce de couleur donnée à une position donnée
+     * la position est vérifié au préalable
+     * les groupes sont mis à jour en fonction de la nouvelle pièce
+     * 
+     * @param pos la position de la pièce est placée
+     * @param couleur la couleur de la pièce positionnée
+     */
+    public void insererPiece(Position pos, boolean couleur)  {
+        groupesTampon = new ArrayList<>(); // On reinitialise le tampon facilement, beni soit le garbage collector....
+
+        this.pieces[pos.getX()][pos.getY()] = new Piece(couleur,pos);
         Groupe nouveauGroupe = new Groupe();
 
-        // On parcours les pieces autour de notre position, quand on tombe sur une piece de même couleur, on ajoute son groupe au nouveau groupe, puis on supprime son groupe
+        // On parcours les pieces autour de notre position, quand on tombe sur une piece de 
+        // même couleur, on ajoute son groupe au nouveau groupe, puis on supprime son groupe
         for(Piece piece : getPiecesAutourDe(pos)){
             if(piece.getCouleur() == couleur){
                 nouveauGroupe.addAll(piece.getGroupe());
