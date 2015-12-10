@@ -6,7 +6,7 @@
 package jeugo;
 
 /**
- *
+ * Une position sur le plateau
  * @author oriane école
  */
 public class Position {

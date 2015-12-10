@@ -22,7 +22,7 @@ public class Groupe extends ArrayList<Piece> {
     }
     
     /**
-     * vérifie si un groupe a des liberté ou non
+     * vérifie si un groupe a des libertés ou non
      * @return true si le groupe a au moins une liberté
      */
     public boolean aLiberté(){
