@@ -5,6 +5,8 @@
  */
 package jeugo;
 
+import jeugo.exceptions.PasDePlateaudeCetteTaille;
+
 /**
  *
  * @author solenemoreau
@@ -15,10 +17,14 @@ public class JeuGO {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        int[][] test = new int[5][5];
-        System.out.println(test[1][1]+"");
-        System.out.println(test[1][1]+"");
-        
+        try {
+            PlateauDeJeu plateau = new PlateauDeJeu(9);
+        } catch (PasDePlateaudeCetteTaille pasDePlateaudeCetteTaille) {
+            pasDePlateaudeCetteTaille.printStackTrace();
+        }
+
+
+
     }
     
 }
