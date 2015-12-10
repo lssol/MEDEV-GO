@@ -13,26 +13,46 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- *
+ * Classe pour décrire un plateau de jeu
  * @author Sacha
  */
 public final class PlateauDeJeu {
-    static Piece[][] pieces;
-    static int width;
-    String jBlanc;
-    String jNoir;
-    int handicap;
-    List<Integer> taillesOk;
-    List<Groupe> groupes;
-    /**
-     * Groupe tampon pour ameliorer les performances
+    /*
+     * Matrice des pièces sur le plateau de jeu
      */
-    List<Groupe> groupesTampon;
-    Vue vue;
-
+    public static Piece pieces[][];
     /**
-     * Crée un plateau de la taille indiquée dans width, refuse de le créer si la taille ne fait pas partie des tailles acceptées
-     * On demande leur nom aux joueurs
+     * Taille du plateau de jeu
+     */
+    private int width;
+    /**
+     * Nom du joueur blanc
+     */
+    private String jBlanc;
+    /**
+     * Nom du joueur noir
+     */
+    private String jNoir;
+    /**
+     * Pièces capturées par le joueur blanc
+     */
+    private ArrayList<Piece> prisonBlanc;
+    /** 
+     * Pièces capturées par le joueur noir
+     */
+    private ArrayList<Piece> prisonNoir;
+    /**
+     * Nombre de pierres noires de handicap
+     */
+    private int handicap;
+    /**
+     * Liste des tailles de plateau acceptées
+     */
+    private ArrayList<Integer> taillesOk;
+    
+    /**
+     * Crée un plateau de la taille indiquée dans width, refuse de le créer si 
+     * la taille ne fait pas partie des tailles acceptées
      * @param width 
      */
     public PlateauDeJeu(int width) throws PasDePlateaudeCetteTaille {
@@ -52,11 +72,7 @@ public final class PlateauDeJeu {
     }
    
     /**
-     * Decris un tour de jeu, pour l'instant, on ne termine pas le jeu donc c'est simplement
-     * Le joueur Blanc joue
-     * On supprime les pions qui doivent être supprimés
-     * Le joueur Noir joue
-     * On supprime les pions qui doivent être supprimés
+     * Décrit un tour de jeu
      */
     public void tourDeJeu(){
         //Les blancs jouent
@@ -88,12 +104,12 @@ public final class PlateauDeJeu {
     private void jouer(boolean couleur) {
 
     }
-
+    
     /**
      * Cree une copie de la matrice, insere la piece, Met à jour les groupes, 
-     * verifie les libertes et met à jour ou non la vrai matrice, selon que l'insertion est légale
-     * <b>C'est une des parties centrales du programme</b>
-     * @param pos la position de la pièce ([x,y])
+     * verifie les libertes et met à jour ou non la vrai matrice, selon que 
+     * l'insertion est légale
+     * @param pos la position de la pièce
      * @return true si l'insertion a reussi, false sinon
      */
     public void insererPiece(int[] pos, boolean couleur) throws AhYaDejaQuelquUnIci {
