@@ -28,10 +28,11 @@ public class Piece {
      */
     private Position position;
     
-    public Piece(boolean c){
+    public Piece(boolean c, Position p){
         this.couleur = c;
         this.groupe = new Groupe();
         groupe.add(this);
+        this.position=p;
     }
 
     public boolean getCouleur() {
@@ -64,7 +65,36 @@ public class Piece {
      */
     public ArrayList<Position> getibertes(){
         
+        ArrayList lib = new ArrayList<Position>();
+
+        if (position.getY() < PlateauDeJeu.getWidth() - 1) {
+            Piece haut = PlateauDeJeu.pieces[position.getX()][position.getY() + 1];
+            if (haut == null) {
+                lib.add(new Position(position.getX(),position.getY() + 1));
+            }
+        }
+
+        if (position.getY() > 0) {
+            Piece bas = PlateauDeJeu.pieces[position.getX()][position.getY() - 1];
+            if (bas == null) {
+                lib.add(new Position(position.getX(),position.getY() - 1));
+            }
+        }
         
-        return null;
+        if (position.getX() < PlateauDeJeu.getWidth() - 1) {
+            Piece droite = PlateauDeJeu.pieces[position.getX()+1][position.getY()];
+            if (droite == null) {
+                lib.add(new Position(position.getX()+1,position.getY()));
+            }
+        }
+
+        if (position.getX() > 0) {
+            Piece gauche = PlateauDeJeu.pieces[position.getX()-1][position.getY()];
+            if (gauche == null) {
+                lib.add(new Position(position.getX()-1,position.getY()));
+            }
+        }
+
+        return lib;
     }
 }
