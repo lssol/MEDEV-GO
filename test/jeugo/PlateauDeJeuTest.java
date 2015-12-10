@@ -6,6 +6,9 @@
 package jeugo;
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import jeugo.exceptions.AhYaDejaQuelquUnIci;
 import jeugo.exceptions.PasDePlateaudeCetteTaille;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -59,24 +62,37 @@ public class PlateauDeJeuTest {
         }catch(Exception e){
             fail(e.toString());
         }
-        
-        instance.tourDeJeu();
-        // TODO review the generated test code and remove the default call to fail.
-        
     }
 
     /**
      * Test of insererPiece method, of class PlateauDeJeu.
      */
     @Test
-    public void testInsererPiece() throws Exception {
+    public void testInsererPiece() {
         System.out.println("insererPiece");
-        int[] pos = null;
+        Position pos = new Position(2,3);
         boolean couleur = false;
-        PlateauDeJeu instance = null;
-        instance.insererPiece(pos, couleur);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        // On insere deux pieces, ca doit pas planter
+        try {
+            plateau.insererPiece(pos, couleur);
+        } catch (Exception ex) {
+            fail(ex.toString());
+        }
+        Position pos2 = new Position(3,3);        
+        try {
+            plateau.insererPiece(pos, couleur);
+        } catch (Exception ex) {
+            fail(ex.toString());
+        }
+        // Maintenant, si on veut inserer une piece alors que yen a deja une, ca doit planter !
+        Position posLeRetour = new Position(3,3);        
+        try {
+            plateau.insererPiece(posLeRetour, couleur);
+            fail("Mince là on a inséré une piece au même endroit qu'une autre et ça marche");
+        } catch (Exception ex) {
+
+        }
+        
     }
 
     /**
