@@ -48,7 +48,7 @@ public final class PlateauDeJeu {
     /**
      * Liste des tailles de plateau acceptées
      */
-    private ArrayList<Groupe> groupes;
+    //private ArrayList<Groupe> groupes;
     private ArrayList<Groupe> groupesTampon;
     private List taillesOk;
     private Vue vue;
