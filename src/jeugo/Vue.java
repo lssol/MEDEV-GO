@@ -50,7 +50,7 @@ public class Vue {
         return pos;
     }
     public void afficherInformation(String info){
-
+        System.out.println(info);
     }
 
     /**
@@ -59,6 +59,11 @@ public class Vue {
      */
     public String[] demanderNomsJoueurs(){
         String[] s = {};
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Indiquez le nom du 1er joueur");
+        s[0] = sc.nextLine();
+        System.out.println("Indiquez le nom du 2ème joueur");
+        s[1] = sc.nextLine();
         return s;
     }
 }
