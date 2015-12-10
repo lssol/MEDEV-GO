@@ -24,7 +24,7 @@ public final class PlateauDeJeu {
     /**
      * Taille du plateau de jeu
      */
-    private int width;
+    private static int width;
     /**
      * Nom du joueur blanc
      */
@@ -48,8 +48,10 @@ public final class PlateauDeJeu {
     /**
      * Liste des tailles de plateau acceptées
      */
-    private ArrayList<Integer> taillesOk;
-    
+    private ArrayList<Groupe> groupes;
+    private ArrayList<Groupe> groupesTampon;
+    private List taillesOk;
+    private Vue vue;
     /**
      * Crée un plateau de la taille indiquée dans width, refuse de le créer si 
      * la taille ne fait pas partie des tailles acceptées

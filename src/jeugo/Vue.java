@@ -1,5 +1,9 @@
 package jeugo;
 
+import java.util.Scanner;
+
+import static jeugo.PlateauDeJeu.pieces;
+
 /**
  * Created by seti on 03/12/15.
  */
@@ -7,11 +11,43 @@ public class Vue {
     public Vue() {
     }
     public void afficherPlateau(){
-
+        System.out.println("DÉBUT AFFICHAGE DU PLATEAU DE JEU");
+        for(int i=0; i < pieces[0].length; i++) {
+            String chaine = "";
+            for(int j=0; j < pieces[0].length; j++) {
+                if (pieces[i][j] != null) {
+                    if (pieces[i][j].getCouleur()) {
+                        chaine = chaine + "B";
+                    } else {
+                        chaine = chaine + "N";
+                    }
+                } else {
+                    chaine = chaine + "*";
+                }
+            }
+            System.out.println(chaine);
+        }
+        System.out.println("FIN AFFICHAGE DU PLATEAU DE JEU");
     }
     public int[] demanderPosition(){
-        int i[] = {0,0};
-        return i;
+        int[] pos = new int[2];
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Où souhaitez-vous poser votre pièce ?");
+        System.out.println("Sur quelle ligne ?");
+        String ligne = sc.nextLine();
+        try {
+            pos[1] = Integer.parseInt(ligne);
+        } catch (NumberFormatException ex) {
+            ex.printStackTrace();
+        }
+        System.out.println("Sur quelle colonne ?");
+        String colonne = sc.nextLine();
+        try {
+            pos[2] = Integer.parseInt(colonne);
+        } catch (NumberFormatException ex) {
+            ex.printStackTrace();
+        }
+        return pos;
     }
     public void afficherInformation(String info){
 
