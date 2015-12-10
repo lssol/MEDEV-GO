@@ -6,6 +6,7 @@
 package jeugo;
 
 import java.util.ArrayList;
+import jeugo.exceptions.PasDePlateaudeCetteTaille;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -143,6 +144,18 @@ public class HistoriqueTest {
         assertTrue(h123.existe(mat2));
         assertTrue(h123.existe(mat3));
         assertFalse(h123.existe(mat4));
+    }
+
+    /**
+     * Test of sauvegarde method, of class Historique.
+     */
+    @Test
+    public void testSauvegarde() throws PasDePlateaudeCetteTaille {
+        PlateauDeJeu pl = new PlateauDeJeu(9);
+        PlateauDeJeu.pieces[0][0]=new Piece(true,new Position(0,0));
+        pl.historique.sauvegarde();
+        
+        assertTrue(pl.historique.existe(PlateauDeJeu.pieces));
     }
 
     

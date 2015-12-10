@@ -52,6 +52,7 @@ public final class PlateauDeJeu {
     private ArrayList<Groupe> groupesTampon;
     private List taillesOk;
     private Vue vue;
+    public Historique historique;
     /**
      * Crée un plateau de la taille indiquée dans width, refuse de le créer si 
      * la taille ne fait pas partie des tailles acceptées
@@ -59,6 +60,9 @@ public final class PlateauDeJeu {
      * @throws jeugo.exceptions.PasDePlateaudeCetteTaille 
      */
     public PlateauDeJeu(int width) throws PasDePlateaudeCetteTaille {
+        // initialisation des attributs
+        this.historique = new Historique();
+
         this.taillesOk = Arrays.asList(9, 16, 19);
 
         if(!taillesOk.contains((Integer) width)){

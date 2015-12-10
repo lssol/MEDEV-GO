@@ -137,4 +137,22 @@ public class Historique extends HashMap<Integer,ArrayList<Piece[][]>>{
         }
     }
     
+    public void sauvegarde(){
+        int compteur = 0;
+        for (int i =0;i<PlateauDeJeu.getWidth();i++){
+            for (int j =0; j <PlateauDeJeu.getWidth();j++){
+                if (PlateauDeJeu.getPieces()[i][j] != null){
+                    compteur ++;
+                }
+            }
+        }
+        
+        if (this.containsKey(compteur)){
+        this.get(compteur).add(PlateauDeJeu.pieces);
+        } else {
+            ArrayList<Piece[][]> tmp = new ArrayList<>();
+            tmp.add(PlateauDeJeu.pieces);
+            this.put(compteur, tmp);
+        }
+    }
 }
