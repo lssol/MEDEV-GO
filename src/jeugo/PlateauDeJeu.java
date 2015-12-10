@@ -95,7 +95,7 @@ public final class PlateauDeJeu {
     private void supprimerGroupes() {
         for(Groupe groupe : groupesTampon) {
             if (!groupe.aLiberté()) {
-                groupes.remove(groupe);
+                groupe.Supprimer();
             }
         }
     }
@@ -133,12 +133,11 @@ public final class PlateauDeJeu {
         for(Piece piece : getPiecesAutourDe(pos)){
             if(piece.getCouleur() == couleur){
                 nouveauGroupe.addAll(piece.getGroupe());
-                groupes.remove(piece.getGroupe());
             }
             else
                 groupesTampon.add(piece.getGroupe()); // Permet une amélioration de performances, c'est intelligent.
         }
-        groupes.add(nouveauGroupe);
+        nouveauGroupe.mettreAjourLiensPieces();
     }
 
     /**
