@@ -93,7 +93,7 @@ public final class PlateauDeJeu {
      */
     private void supprimerGroupes() {
         for(Groupe groupe : groupesTampon) {
-            if (groupe.getLibertes() == 0) {
+            if (!groupe.aLiberté()) {
                 groupes.remove(groupe);
             }
         }
