@@ -82,11 +82,13 @@ public final class PlateauDeJeu {
      * Décrit un tour de jeu
      */
     public void tourDeJeu(){
-        this.chargerNoms();
+        this.chargerNoms();   
+        for (int i = 0; i < 10; i++) {
         //Les blancs jouent
         jouer(true);
         //Les noirs
-        jouer(false);
+        jouer(false);     
+        }
     }
 
     /**
@@ -142,7 +144,7 @@ public final class PlateauDeJeu {
      * @param couleur joueur en train de poser une pièce
      * @return true si la position est compatible avec les règles
      */
-    private boolean verifierPosition(Position p, boolean couleur) {
+    public boolean verifierPosition(Position p, boolean couleur) {
         //position libre
         if (PlateauDeJeu.pieces[p.getX()][p.getY()] == null) {
             Piece tmp = new Piece(couleur, p);
@@ -156,10 +158,12 @@ public final class PlateauDeJeu {
                 } else {
                     // suicide ou bien suppression d'un groupe tampon
                     for(Piece piece : getPiecesAutourDe(p)){
-                        if(piece.getCouleur()==!couleur){
+                        if(piece!=null){
+                            if(piece.getCouleur()==!couleur){
                             if (!piece.getGroupe().aLiberte()){
                                 return true;
                             }
+                        }
                         }
                     }
                     // si pour les quatre voisins, aucun groupe adversaire n'est privé de ses libertés alors c'est un suicide

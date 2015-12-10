@@ -117,4 +117,56 @@ public class PlateauDeJeuTest {
         }
     }
 
+    /**
+     * Test of chargerNoms method, of class PlateauDeJeu.
+     */
+    @Test
+    public void testChargerNoms() {
+        System.out.println("chargerNoms");
+        PlateauDeJeu instance = null;
+        instance.chargerNoms();
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+
+/**
+     * Test of verifierPosition method, of class PlateauDeJeu.
+     */
+    @Test
+    public void testVerifierPosition() throws PasDePlateaudeCetteTaille {
+        PlateauDeJeu pl = new PlateauDeJeu(9);
+        PlateauDeJeu.pieces[1][0] = new Piece(true,new Position(1,0));
+        PlateauDeJeu.pieces[0][1] = new Piece(true,new Position(0,1));
+        // position occupée
+        assertFalse(pl.verifierPosition(new Position(0,1), true));
+        //suicide impossible
+        assertFalse(pl.verifierPosition(new Position(0,0),false));
+        // règle de Ko
+        
+        // pas de liberté mais le voisin non plus (ex figure6 sujet)
+        Groupe g = new Groupe();
+        g.add(PlateauDeJeu.pieces[2][0] = new Piece(true,new Position(2,0)));
+        g.add(PlateauDeJeu.pieces[2][1] = new Piece(true,new Position(2,1)));
+        g.add(PlateauDeJeu.pieces[2][2] = new Piece(true,new Position(2,2)));
+        g.add(PlateauDeJeu.pieces[3][2] = new Piece(true,new Position(3,2)));
+        g.add(PlateauDeJeu.pieces[4][2] = new Piece(true,new Position(4,2)));
+        g.add(PlateauDeJeu.pieces[5][2] = new Piece(true,new Position(5,2)));
+        g.add(PlateauDeJeu.pieces[6][2] = new Piece(true,new Position(2,0)));
+        g.add(PlateauDeJeu.pieces[6][1] = new Piece(true,new Position(2,0)));
+        g.add(PlateauDeJeu.pieces[6][0] = new Piece(true,new Position(2,0)));
+        g.mettreAjourLiensPieces();
+        
+        Groupe h = new Groupe();
+        h.add(PlateauDeJeu.pieces[3][0] = new Piece(false,new Position(3,0)));
+        h.add(PlateauDeJeu.pieces[3][1] = new Piece(false,new Position(3,1)));
+        h.add(PlateauDeJeu.pieces[4][1] = new Piece(false,new Position(4,1)));
+        h.add(PlateauDeJeu.pieces[5][1] = new Piece(false,new Position(5,1)));
+        h.add(PlateauDeJeu.pieces[5][0] = new Piece(false,new Position(5,0)));
+        h.mettreAjourLiensPieces();
+        
+        assertTrue(pl.verifierPosition(new Position(4,0), true));
+        
+    }
+
 }
