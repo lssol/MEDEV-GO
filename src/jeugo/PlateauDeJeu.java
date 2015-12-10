@@ -123,10 +123,11 @@ public final class PlateauDeJeu {
         if(pieces[x][y] != null){
             throw new AhYaDejaQuelquUnIci(pos);
         }
-
+/* Pour après, pour pouvoir empecher de mettre à certaines places
         Piece[][] copie = pieces.clone();
         copie[x][y] = new Piece(couleur);
-
+*/
+        pieces[x][y] = new Piece(couleur);
         Groupe nouveauGroupe = new Groupe();
 
         // On parcours les pieces autour de notre position, quand on tombe sur une piece de même couleur, on ajoute son groupe au nouveau groupe, puis on supprime son groupe
@@ -137,6 +138,7 @@ public final class PlateauDeJeu {
             else
                 groupesTampon.add(piece.getGroupe()); // Permet une amélioration de performances, c'est intelligent.
         }
+        
         nouveauGroupe.mettreAjourLiensPieces();
     }
 

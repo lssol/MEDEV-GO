@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static jeugo.PlateauDeJeu.pieces;
 import jeugo.exceptions.AhYaDejaQuelquUnIci;
 import jeugo.exceptions.PasDePlateaudeCetteTaille;
 import org.junit.After;
@@ -36,7 +37,7 @@ public class PlateauDeJeuTest {
             PlateauDeJeu plateauQuiDevraitPasMarcher = new PlateauDeJeu(18);
             fail("On ne devrait pas pouvoir créer de plateau de cette taille !!! : " + 18);
         } catch (PasDePlateaudeCetteTaille e) {
-            fail("Il accepte pas cette taille : " + 16);
+            
         }
     }
     
@@ -105,8 +106,8 @@ public class PlateauDeJeuTest {
         System.out.println("getPiecesAutourDe");
         plateau = new PlateauDeJeu(16);
         
-        plateau.insererPiece(new Position(3,2), false);
-        plateau.insererPiece(new Position(2,1), false);
+        PlateauDeJeu.pieces[3][2] = new Piece(false);
+        PlateauDeJeu.pieces[2][1] = new Piece(false);
         
         List pieces = plateau.getPiecesAutourDe(new Position(3,1));
         
