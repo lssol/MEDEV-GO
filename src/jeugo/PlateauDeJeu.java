@@ -114,9 +114,9 @@ public final class PlateauDeJeu {
      * @param pos la position de la pièce
      * @return true si l'insertion a reussi, false sinon
      */
-    public void insererPiece(int[] pos, boolean couleur) throws AhYaDejaQuelquUnIci {
-        int x  = pos[0];
-        int y = pos[1];
+    public void insererPiece(Position pos, boolean couleur) throws AhYaDejaQuelquUnIci {
+        int x  = pos.getX();
+        int y = pos.getY();
         groupesTampon = new ArrayList<Groupe>(); // On reinitialise le tampon facilement, beni soit le garbage collector....
 
         if(pieces[x][y] != null){
@@ -145,9 +145,9 @@ public final class PlateauDeJeu {
      * @param pos la position autour de laquelle on veut trouver les pieces
      * @return la liste des pieces trouvées
      */
-    public List<Piece> getPiecesAutourDe(int[] pos){
-        int x  = pos[0];
-        int y = pos[1];
+    public List<Piece> getPiecesAutourDe(Position pos){
+        int x  = pos.getX();
+        int y = pos.getY();
 
         List<Piece> liste = new ArrayList<>();
 
