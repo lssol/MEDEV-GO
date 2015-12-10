@@ -78,9 +78,9 @@ public class Groupe extends ArrayList<Piece> {
         }
     }
     /**
-     * Pour toutes les pieces du groupe, met à jour l'attribut Groupe en le settant à this
+     * Pour toutes les pieces du groupe, met à jour l'attribut Groupe en le mettant à this
      */
-    void mettreAjourLiensPieces() {
+    public void mettreAjourLiensPieces() {
         for(Piece piece : this){
             piece.setGroupe(this);
         }

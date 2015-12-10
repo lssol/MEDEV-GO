@@ -29,21 +29,21 @@ public class Vue {
         }
         System.out.println("FIN AFFICHAGE DU PLATEAU DE JEU");
     }
-    public int[] demanderPosition(){
-        int[] pos = new int[2];
+    public Position demanderPosition(){
+        Position pos = new Position();
         Scanner sc = new Scanner(System.in);
         System.out.println("Où souhaitez-vous poser votre pièce ?");
         System.out.println("Sur quelle ligne ?");
         String ligne = sc.nextLine();
         try {
-            pos[1] = Integer.parseInt(ligne);
+            pos.setX(Integer.parseInt(ligne));
         } catch (NumberFormatException ex) {
             ex.printStackTrace();
         }
         System.out.println("Sur quelle colonne ?");
         String colonne = sc.nextLine();
         try {
-            pos[2] = Integer.parseInt(colonne);
+            pos.setY(Integer.parseInt(colonne));
         } catch (NumberFormatException ex) {
             ex.printStackTrace();
         }
