@@ -30,7 +30,7 @@ public class Historique extends HashMap<Integer,ArrayList<Piece[][]>>{
      * @param p2 une matrice de pièces
      * @return un entier
      */
-    private int compareMat(Piece[][] p1, Piece[][] p2) {
+    public int compareMat(Piece[][] p1, Piece[][] p2) {
         if (p1.length != p2.length) {
             return -1;
         } else {
