@@ -19,6 +19,7 @@ public class JeuGO {
     public static void main(String[] args) {
         try {
             PlateauDeJeu plateau = new PlateauDeJeu(16);
+            plateau.tourDeJeu();
         } catch (PasDePlateaudeCetteTaille pasDePlateaudeCetteTaille) {
             pasDePlateaudeCetteTaille.printStackTrace();
         }

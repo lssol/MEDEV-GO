@@ -82,9 +82,9 @@ public final class PlateauDeJeu {
      * Décrit un tour de jeu
      */
     public void tourDeJeu(){
+        this.chargerNoms();
         //Les blancs jouent
         jouer(true);
-
         //Les noirs
         jouer(false);
     }
@@ -104,6 +104,8 @@ public final class PlateauDeJeu {
 
     /**
      * Un joueur joue (interaction avec l'utilisateur via Affichage)
+     * contient le choix de la position, la vérification de la position
+     * l'insertion et la suppression des groupes
      * @param couleur est la couleur qui joue : true = blanc
      */
     private void jouer(boolean couleur){
@@ -114,9 +116,9 @@ public final class PlateauDeJeu {
         // vérifier la position : tant que la position incorrecte - redemander 
         Position pos = new Position();
         boolean posOK = false;
-        while (posOK){
+        while (!posOK){
             pos = vue.demanderPosition();
-            // posOK = this.verifierPosition(pos);
+            posOK = this.verifierPosition(pos,couleur);
         }
         
         this.insererPiece(pos, couleur);
@@ -132,6 +134,7 @@ public final class PlateauDeJeu {
     
     /**
      * vérifie la conformité d'une position choisie avec les règles du GO
+     * - position libre
      * - regle de Ko (historique)
      * - a des libertés
      * - si pas de liberté : vérif que groupe tampon est supprimé : si oui -> true 
@@ -139,14 +142,38 @@ public final class PlateauDeJeu {
      * @param couleur joueur en train de poser une pièce
      * @return true si la position est compatible avec les règles
      */
-    public boolean verifierPosition(Position p, boolean couleur){
- 
-/* Pour après, pour pouvoir empecher de mettre à certaines places
-        Piece[][] copie = pieces.clone();
-        copie[x][y] = new Piece(couleur);
-*/
-        
-        return true;
+    private boolean verifierPosition(Position p, boolean couleur) {
+        //position libre
+        if (PlateauDeJeu.pieces[p.getX()][p.getY()] == null) {
+            Piece tmp = new Piece(couleur, p);
+            PlateauDeJeu.pieces[p.getX()][p.getY()] = tmp;
+            // regle de Ko
+            if (!this.historique.existe(pieces)) {
+                // a des libertés
+                if (!tmp.getibertes().isEmpty()) {
+                    PlateauDeJeu.pieces[p.getX()][p.getY()] = null;
+                    return true;
+                } else {
+                    // suicide ou bien suppression d'un groupe tampon
+                    for(Piece piece : getPiecesAutourDe(p)){
+                        if(piece.getCouleur()==!couleur){
+                            if (!piece.getGroupe().aLiberte()){
+                                return true;
+                            }
+                        }
+                    }
+                    // si pour les quatre voisins, aucun groupe adversaire n'est privé de ses libertés alors c'est un suicide
+                    return false;
+                }
+            } else {
+            // configuration déjà vue
+                return false;
+            }
+
+        } else {
+        // position deja prise
+            return false;
+        }
     }
     
     /**
@@ -165,14 +192,17 @@ public final class PlateauDeJeu {
 
         // On parcours les pieces autour de notre position, quand on tombe sur une piece de 
         // même couleur, on ajoute son groupe au nouveau groupe, puis on supprime son groupe
+        
         for(Piece piece : getPiecesAutourDe(pos)){
+            if (piece!=null){
             if(piece.getCouleur() == couleur){
                 nouveauGroupe.addAll(piece.getGroupe());
             }
+            
             else
                 groupesTampon.add(piece.getGroupe()); // Permet une amélioration de performances, c'est intelligent.
+            }
         }
-        
         nouveauGroupe.mettreAjourLiensPieces();
     }
 

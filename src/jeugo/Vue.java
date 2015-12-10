@@ -58,7 +58,7 @@ public class Vue {
      * @return La première case est le nom du blanc, la seconde, le nom du noir
      */
     public String[] demanderNomsJoueurs(){
-        String[] s = {};
+        String[] s = new String[2];
         Scanner sc = new Scanner(System.in);
         System.out.println("Indiquez le nom du 1er joueur");
         s[0] = sc.nextLine();
