@@ -67,12 +67,13 @@ public final class PlateauDeJeu {
             this.width = width;
             pieces = new Piece[width][width];
         }
+    }
+    public void chargerNoms(){
         vue = new Vue();
         String[] noms = vue.demanderNomsJoueurs();
         jBlanc = noms[0];
         jNoir = noms[1];
     }
-   
     /**
      * Décrit un tour de jeu
      */
