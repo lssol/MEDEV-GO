@@ -95,7 +95,7 @@ public final class PlateauDeJeu {
     private void supprimerGroupes() {
         for(Groupe groupe : groupesTampon) {
             if (!groupe.aLiberté()) {
-                groupes.remove(groupe);
+                groupe.Supprimer();
             }
         }
     }
@@ -123,22 +123,23 @@ public final class PlateauDeJeu {
         if(pieces[x][y] != null){
             throw new AhYaDejaQuelquUnIci(pos);
         }
-
+/* Pour après, pour pouvoir empecher de mettre à certaines places
         Piece[][] copie = pieces.clone();
         copie[x][y] = new Piece(couleur);
-
+*/
+        pieces[x][y] = new Piece(couleur);
         Groupe nouveauGroupe = new Groupe();
 
         // On parcours les pieces autour de notre position, quand on tombe sur une piece de même couleur, on ajoute son groupe au nouveau groupe, puis on supprime son groupe
         for(Piece piece : getPiecesAutourDe(pos)){
             if(piece.getCouleur() == couleur){
                 nouveauGroupe.addAll(piece.getGroupe());
-                groupes.remove(piece.getGroupe());
             }
             else
                 groupesTampon.add(piece.getGroupe()); // Permet une amélioration de performances, c'est intelligent.
         }
-        groupes.add(nouveauGroupe);
+        
+        nouveauGroupe.mettreAjourLiensPieces();
     }
 
     /**

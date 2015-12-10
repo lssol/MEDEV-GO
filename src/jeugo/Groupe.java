@@ -6,6 +6,7 @@
 package jeugo;
 
 import java.util.ArrayList;
+import static jeugo.PlateauDeJeu.pieces;
 
 
 /**
@@ -31,5 +32,39 @@ public class Groupe extends ArrayList<Piece> {
     
     public int getOeils(){
         return 0;
+    }
+
+    /**
+     * Supprimer un groupe du plateau de jeu
+    */
+    void Supprimer() {
+        for(int i=0; i < PlateauDeJeu.pieces[0].length; i++) {
+            for(int j=0; j < PlateauDeJeu.pieces[0].length; j++) {
+                if(PlateauDeJeu.pieces[i][j].getGroupe() == this){
+                    PlateauDeJeu.pieces[i][j] = null;
+                }
+            }
+        }
+    }
+    /**
+     * Supprime un groupe d'une matrice fictive
+     * @param mat 
+     */
+    void Supprimer(Piece[][] mat) {
+        for(int i=0; i < mat[0].length; i++) {
+            for(int j=0; j < mat[0].length; j++) {
+                if(mat[i][j].getGroupe() == this){
+                    mat[i][j] = null;
+                }
+            }
+        }
+    }
+    /**
+     * Pour toutes les pieces du groupe, met à jour l'attribut Groupe en le settant à this
+     */
+    void mettreAjourLiensPieces() {
+        for(Piece piece : this){
+            piece.setGroupe(this);
+        }
     }
 }
