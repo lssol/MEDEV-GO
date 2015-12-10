@@ -97,4 +97,15 @@ public class Piece {
 
         return lib;
     }
+    
+    /**
+     * Compare la position et la couleur de la pièce actuelle avec une autre pièce
+     * Renvoie true si c'est identique
+     * Renvoie false sinon
+     * @param p une pièce
+     * @return 
+     */
+    public boolean compareCouleurPosition(Piece p) {
+        return this.couleur == p.getCouleur() && this.position.equals(p.getPosition());
+    }
 }
