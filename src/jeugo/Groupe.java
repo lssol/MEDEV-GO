@@ -6,7 +6,6 @@
 package jeugo;
 
 import java.util.ArrayList;
-import static jeugo.PlateauDeJeu.pieces;
 
 
 /**
@@ -14,19 +13,38 @@ import static jeugo.PlateauDeJeu.pieces;
  * @author solenemoreau, sacha
  */
 public class Groupe extends ArrayList<Piece> {
+
+    public Groupe() {
+    super();
+    }
+    
     /**
      * retourne la liste des liberté d'un groupe, c'est à dire la liste des libertés des pièces du groupe
      * @return liste de position qui sont des libertés pour le groupe
      */
     public ArrayList<Position> getLibertes(){
-        return null;
+        ArrayList<Position> res = new ArrayList<>();
+            for (Piece p:this){
+                for (Position posP : p.getibertes()){
+                    boolean test = false;
+                    for (Position posRes : res){
+                        if (posP.equals(posRes)){
+                            test = true;
+                        }
+                    }
+                    if (!test){
+                        res.add(posP);
+                    }
+                }
+            }
+        return res;
     }
     
     /**
      * vérifie si un groupe a des libertés ou non
      * @return true si le groupe a au moins une liberté
      */
-    public boolean aLiberté(){
+    public boolean aLiberte(){
         return !(this.getLibertes().isEmpty());
     }
     

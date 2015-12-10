@@ -52,7 +52,9 @@ public class Piece {
     }
 
     public void setGroupe(Groupe groupe) {
+        this.groupe.remove(this);
         this.groupe = groupe;
+        this.groupe.add(this);
     }
     
     public void setPosition(Position p){

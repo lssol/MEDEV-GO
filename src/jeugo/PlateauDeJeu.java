@@ -94,7 +94,7 @@ public final class PlateauDeJeu {
      */
     private void supprimerGroupes() {
         for(Groupe groupe : groupesTampon) {
-            if (!groupe.aLiberté()) {
+            if (!groupe.aLiberte()) {
                 groupe.Supprimer();
             }
         }
