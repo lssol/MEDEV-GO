@@ -5,6 +5,7 @@
  */
 package jeugo;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -55,8 +56,9 @@ public class PlateauDeJeuTest {
      * Test of tourDeJeu method, of class PlateauDeJeu.
      */
     @Test
-    public void testTourDeJeu() {
+    public void testTourDeJeu() throws PasDePlateaudeCetteTaille {
         System.out.println("tourDeJeu");
+        plateau = new PlateauDeJeu(16);
         try{
             plateau.tourDeJeu();
         }catch(Exception e){
@@ -99,41 +101,19 @@ public class PlateauDeJeuTest {
      * Test of getPiecesAutourDe method, of class PlateauDeJeu.
      */
     @Test
-    public void testGetPiecesAutourDe() {
+    public void testGetPiecesAutourDe() throws PasDePlateaudeCetteTaille, AhYaDejaQuelquUnIci {
         System.out.println("getPiecesAutourDe");
-        int[] pos = null;
-        PlateauDeJeu instance = null;
-        List<Piece> expResult = null;
-        List<Piece> result = instance.getPiecesAutourDe(pos);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        plateau = new PlateauDeJeu(16);
+        
+        plateau.insererPiece(new Position(3,2), false);
+        plateau.insererPiece(new Position(2,1), false);
+        
+        List pieces = plateau.getPiecesAutourDe(new Position(3,1));
+        
+        int nbPieces = pieces.size();
+        if(nbPieces != 2){
+            fail("Il ya 2 voisins normalement, mais il me dit qu'il y en a : " + pieces.size());
+        }
     }
 
-    /**
-     * Test of getPieces method, of class PlateauDeJeu.
-     */
-    @Test
-    public void testGetPieces() {
-        System.out.println("getPieces");
-        Piece[][] expResult = null;
-        Piece[][] result = PlateauDeJeu.getPieces();
-        assertArrayEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of getWidth method, of class PlateauDeJeu.
-     */
-    @Test
-    public void testGetWidth() {
-        System.out.println("getWidth");
-        int expResult = 0;
-        int result = PlateauDeJeu.getWidth();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-    
 }
