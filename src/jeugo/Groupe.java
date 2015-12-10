@@ -13,9 +13,22 @@ import java.util.ArrayList;
  * @author solenemoreau, sacha
  */
 public class Groupe extends ArrayList<Piece> {
-    public int getLibertes(){
-        return 0;
+    /**
+     * retourne la liste des liberté d'un groupe, c'est à dire la liste des libertés des pièces du groupe
+     * @return liste de position qui sont des libertés pour le groupe
+     */
+    public ArrayList<Position> getLibertes(){
+        return null;
     }
+    
+    /**
+     * vérifie si un groupe a des liberté ou non
+     * @return true si le groupe a au moins une liberté
+     */
+    public boolean aLiberté(){
+        return !(this.getLibertes().isEmpty());
+    }
+    
     public int getOeils(){
         return 0;
     }

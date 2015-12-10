@@ -5,6 +5,8 @@
  */
 package jeugo;
 
+import java.util.ArrayList;
+
 /** Classe pour modéliser une pièce
  * @author solenemoreau
  */
@@ -21,6 +23,11 @@ public class Piece {
      */
     private Groupe groupe;
     
+    /**
+     * position de la pièce
+     */
+    private Position position;
+    
     public Piece(boolean c){
         this.couleur = c;
         this.groupe = new Groupe();
@@ -35,6 +42,10 @@ public class Piece {
         return groupe;
     }
 
+    public Position getPosition(){
+        return position;
+    }
+    
     public void setCouleur(boolean couleur) {
         this.couleur = couleur;
     }
@@ -43,7 +54,17 @@ public class Piece {
         this.groupe = groupe;
     }
     
+    public void setPosition(Position p){
+     this.position = p;   
+    }
     
-    
-    
+    /**
+     * retourne la liste des libertés pour la pièce
+     * @return liste de position qui sont des libertés de la pièce
+     */
+    public ArrayList<Position> getibertes(){
+        
+        
+        return null;
+    }
 }
