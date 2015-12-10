@@ -124,7 +124,7 @@ public final class PlateauDeJeu {
         }
 
         Piece[][] copie = pieces.clone();
-        copie[x][y] = new Piece();
+        copie[x][y] = new Piece(couleur);
 
         Groupe nouveauGroupe = new Groupe();
 

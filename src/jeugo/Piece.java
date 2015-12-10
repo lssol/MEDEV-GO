@@ -24,6 +24,7 @@ public class Piece {
     public Piece(boolean c){
         this.couleur = c;
         this.groupe = new Groupe();
+        groupe.add(this);
     }
 
     public boolean getCouleur() {
