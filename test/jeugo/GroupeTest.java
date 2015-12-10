@@ -70,7 +70,6 @@ public class GroupeTest {
         PlateauDeJeu.pieces[2][1] = p4;
        
         ArrayList<Position> resultG = g.getLibertes();
-        System.out.println(resultG.size());
         assertTrue(resultG.size() == 6);
         boolean e = false;
         boolean f = false;

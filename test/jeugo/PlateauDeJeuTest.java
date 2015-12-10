@@ -106,8 +106,8 @@ public class PlateauDeJeuTest {
         System.out.println("getPiecesAutourDe");
         plateau = new PlateauDeJeu(16);
         
-        PlateauDeJeu.pieces[3][2] = new Piece(false);
-        PlateauDeJeu.pieces[2][1] = new Piece(false);
+        PlateauDeJeu.pieces[3][2] = new Piece(false,new Position(3,2));
+        PlateauDeJeu.pieces[2][1] = new Piece(false,new Position(2,1));
         
         List pieces = plateau.getPiecesAutourDe(new Position(3,1));
         

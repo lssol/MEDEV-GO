@@ -56,6 +56,7 @@ public final class PlateauDeJeu {
      * Crée un plateau de la taille indiquée dans width, refuse de le créer si 
      * la taille ne fait pas partie des tailles acceptées
      * @param width 
+     * @throws jeugo.exceptions.PasDePlateaudeCetteTaille 
      */
     public PlateauDeJeu(int width) throws PasDePlateaudeCetteTaille {
         this.taillesOk = Arrays.asList(9, 16, 19);
@@ -64,7 +65,7 @@ public final class PlateauDeJeu {
             throw new PasDePlateaudeCetteTaille(width);
         }
         else {
-            this.width = width;
+            PlateauDeJeu.width = width;
             pieces = new Piece[width][width];
         }
     }
@@ -105,6 +106,17 @@ public final class PlateauDeJeu {
      * @param couleur est la couleur qui joue : true = blanc
      */
     private void jouer(boolean couleur) {
+        // demander la position ou passer
+        
+        // vérifier la position 
+        // si position incorrecte : redemander 
+        
+        // inserer pièce à la position choisie
+        
+        // supprimer les groupes sans liberté
+        
+        // enregister l'état du plateau dans historique
+        // enregister le mouvement dans le fichier texte
 
     }
     
@@ -127,7 +139,7 @@ public final class PlateauDeJeu {
         Piece[][] copie = pieces.clone();
         copie[x][y] = new Piece(couleur);
 */
-        pieces[x][y] = new Piece(couleur);
+        pieces[x][y] = new Piece(couleur,pos);
         Groupe nouveauGroupe = new Groupe();
 
         // On parcours les pieces autour de notre position, quand on tombe sur une piece de même couleur, on ajoute son groupe au nouveau groupe, puis on supprime son groupe
@@ -143,7 +155,7 @@ public final class PlateauDeJeu {
     }
 
     /**
-     * Permet de recupérer la liste des pièces autour d'une position
+     * Permet de récupérer la liste des pièces autour d'une position
      * @param pos la position autour de laquelle on veut trouver les pieces
      * @return la liste des pieces trouvées
      */
