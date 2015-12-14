@@ -18,6 +18,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.Ignore;
 
 /**
  *
@@ -76,11 +77,11 @@ public class PlateauDeJeuTest {
         Position pos = new Position(2,3);
         boolean couleur = false;
         // On insere deux pieces, ca doit pas planter
-        try {
+        //try {
             plateau.insererPiece(pos, couleur);
-        } catch (Exception ex) {
+       /* } catch (Exception ex) {
             fail(ex.toString());
-        }
+        }*/
         Position pos2 = new Position(3,3);        
         try {
             plateau.insererPiece(pos, couleur);
@@ -120,6 +121,7 @@ public class PlateauDeJeuTest {
     /**
      * Test of chargerNoms method, of class PlateauDeJeu.
      */
+    @Ignore
     @Test
     public void testChargerNoms() {
         System.out.println("chargerNoms");
