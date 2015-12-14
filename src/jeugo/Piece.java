@@ -110,4 +110,11 @@ public class Piece {
     public boolean compareCouleurPosition(Piece p) {
         return this.couleur == p.getCouleur() && this.position.equals(p.getPosition());
     }
+    
+    public String toString(){
+        String texteCouleur;
+        texteCouleur = couleur ? "Blanc" : "Noir";
+        
+        return texteCouleur + " : (" + this.position.getX() + ", " + this.position.getY() + ")";
+    }
 }

@@ -58,8 +58,10 @@ public class Groupe extends ArrayList<Piece> {
     void Supprimer() {
         for(int i=0; i < PlateauDeJeu.pieces[0].length; i++) {
             for(int j=0; j < PlateauDeJeu.pieces[0].length; j++) {
-                if(PlateauDeJeu.pieces[i][j].getGroupe() == this){
-                    PlateauDeJeu.pieces[i][j] = null;
+                if(PlateauDeJeu.pieces[i][j] != null){
+                    if(PlateauDeJeu.pieces[i][j].getGroupe() == this){
+                        PlateauDeJeu.pieces[i][j] = null;
+                    }
                 }
             }
         }
@@ -84,5 +86,12 @@ public class Groupe extends ArrayList<Piece> {
         for(Piece piece : this){
             piece.setGroupe(this);
         }
+    }
+    public String toString(){
+        String texte = "";
+        for(Piece piece : this){
+            texte += piece.toString();
+        }
+        return texte;
     }
 }
