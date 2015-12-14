@@ -149,8 +149,8 @@ public class GroupeTest {
         // Sur la diagonale (pas dans le même groupe donc)
         plateau.insererPiece(new Position(2,3), true);
         
-        Vue vue = new Vue();
-        vue.afficherPlateau();
+        /*Vue vue = new Vue();
+        vue.afficherPlateau();*/
         PlateauDeJeu.pieces[1][0].getGroupe().Supprimer();
 
         if(    PlateauDeJeu.pieces[1][1] != null 
@@ -158,11 +158,11 @@ public class GroupeTest {
             || PlateauDeJeu.pieces[1][2] != null 
             || PlateauDeJeu.pieces[0][2] != null )
         {
-            vue.afficherPlateau();
+            //vue.afficherPlateau();
             fail("Il aurait du supprimer tout le groupe...");
         }
         if(PlateauDeJeu.pieces[2][3] == null || PlateauDeJeu.pieces[1][4] == null){
-            vue.afficherPlateau();
+            //vue.afficherPlateau();
             fail("Celles là, il aurait pas du les supprimer");
         }
             
