@@ -134,9 +134,38 @@ public class GroupeTest {
      * Test of Supprimer method, of class Groupe.
      */
     @Test
-    public void testSupprimer_0args() {
+    public void testSupprimer_0args() throws PasDePlateaudeCetteTaille {
         System.out.println("Supprimer");
+        PlateauDeJeu plateau = new PlateauDeJeu(16);
+        
+        //Dans le même groupe (adjacents)
+        plateau.insererPiece(new Position(1,1), true);
+        plateau.insererPiece(new Position(1,0), true);
+        plateau.insererPiece(new Position(1,2), true);
+        plateau.insererPiece(new Position(0,2), true);
+        //Est adjacent, mais de couleure opposée
+        plateau.insererPiece(new Position(1,4), false);
+        
+        // Sur la diagonale (pas dans le même groupe donc)
+        plateau.insererPiece(new Position(2,3), true);
+        
+        Vue vue = new Vue();
+        vue.afficherPlateau();
+        PlateauDeJeu.pieces[1][0].getGroupe().Supprimer();
 
+        if(    PlateauDeJeu.pieces[1][1] != null 
+            || PlateauDeJeu.pieces[1][0] != null 
+            || PlateauDeJeu.pieces[1][2] != null 
+            || PlateauDeJeu.pieces[0][2] != null )
+        {
+            vue.afficherPlateau();
+            fail("Il aurait du supprimer tout le groupe...");
+        }
+        if(PlateauDeJeu.pieces[2][3] == null || PlateauDeJeu.pieces[1][4] == null){
+            vue.afficherPlateau();
+            fail("Celles là, il aurait pas du les supprimer");
+        }
+            
     }
 
     /**

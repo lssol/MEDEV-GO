@@ -196,19 +196,18 @@ public final class PlateauDeJeu {
 
         this.pieces[pos.getX()][pos.getY()] = new Piece(couleur, pos);
         Groupe nouveauGroupe = new Groupe();
-
+        nouveauGroupe.add(this.pieces[pos.getX()][pos.getY()]);
+        
         // On parcours les pieces autour de notre position, quand on tombe sur une piece de 
         // même couleur, on ajoute son groupe au nouveau groupe, puis on supprime son groupe
         for (Piece piece : getPiecesAutourDe(pos)) {
-            if (piece != null) {
-                if (piece.getCouleur() == couleur) {
-                    if (!nouveauGroupe.contains(piece)) {
-                        nouveauGroupe.addAll(piece.getGroupe());
-                    }
-                } else {
-                    if (!groupesTampon.contains(piece)) {
-                        groupesTampon.add(piece.getGroupe()); // Permet une amélioration de performances, c'est intelligent.
-                    }
+            if (piece.getCouleur() == couleur) {
+                if (!nouveauGroupe.contains(piece)) {
+                    nouveauGroupe.addAll(piece.getGroupe());
+                }
+            } else {
+                if (!groupesTampon.contains(piece)) {
+                    groupesTampon.add(piece.getGroupe()); // Permet une amélioration de performances, c'est intelligent.
                 }
             }
         }
