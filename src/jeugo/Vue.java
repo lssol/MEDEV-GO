@@ -66,4 +66,18 @@ public class Vue {
         s[1] = sc.nextLine();
         return s;
     }
+    
+    public void afficherTourJoueur(boolean couleur){
+        String nom = "";
+        if (couleur){
+            nom = "Blanc : "+PlateauDeJeu.getjBlanc();
+        } else {
+            nom = "Noir : "+PlateauDeJeu.getjNoir();
+        }
+        System.out.println("Tour du joueur "+nom);
+    }
+    
+    public void afficherErreur(String err){
+        System.out.println("** "+err+" **");
+    }
 }

@@ -29,11 +29,11 @@ public final class PlateauDeJeu {
     /**
      * Nom du joueur blanc
      */
-    private String jBlanc;
+    private static String jBlanc;
     /**
      * Nom du joueur noir
      */
-    private String jNoir;
+    private static String jNoir;
     /**
      * Pièces capturées par le joueur blanc
      */
@@ -120,6 +120,7 @@ public final class PlateauDeJeu {
     private void jouer(boolean couleur) {
         Vue vue = new Vue();
         vue.afficherPlateau();
+        vue.afficherTourJoueur(couleur);
 
         // demander la position ou placer la pièce
         // vérifier la position : tant que la position incorrecte - redemander 
@@ -148,40 +149,50 @@ public final class PlateauDeJeu {
      * @return true si la position est compatible avec les règles
      */
     public boolean verifierPosition(Position p, boolean couleur) {
-        //position libre
-        if (PlateauDeJeu.pieces[p.getX()][p.getY()] == null) {
-            Piece tmp = new Piece(couleur, p);
-            PlateauDeJeu.pieces[p.getX()][p.getY()] = tmp;
-            // regle de Ko
-            if (!this.historique.existe(pieces)) {
-                // a des libertés
-                if (!tmp.getibertes().isEmpty()) {
-                    PlateauDeJeu.pieces[p.getX()][p.getY()] = null;
-                    return true;
-                } else {
-                    // suicide ou bien suppression d'un groupe tampon
-                    for (Piece piece : getPiecesAutourDe(p)) {
-                        if (piece != null) {
-                            if (piece.getCouleur() == !couleur) {
-                                if (!piece.getGroupe().aLiberte()) {
-                                    PlateauDeJeu.pieces[p.getX()][p.getY()] = null;
-                                    return true;
+        // position dns les limites du plateau
+        if (p.getX() < PlateauDeJeu.width && p.getY() < PlateauDeJeu.width && p.getX() >= 0 && p.getY() >= 0) {
+            //position libre
+            if (PlateauDeJeu.pieces[p.getX()][p.getY()] == null) {
+                Piece tmp = new Piece(couleur, p);
+                PlateauDeJeu.pieces[p.getX()][p.getY()] = tmp;
+                // regle de Ko
+                if (!this.historique.existe(pieces)) {
+                    // a des libertés
+                    if (!tmp.getibertes().isEmpty()) {
+                        PlateauDeJeu.pieces[p.getX()][p.getY()] = null;
+                        return true;
+                    } else {
+                        // suicide ou bien suppression d'un groupe tampon
+                        for (Piece piece : getPiecesAutourDe(p)) {
+                            if (piece != null) {
+                                if (piece.getCouleur() == !couleur) {
+                                    if (!piece.getGroupe().aLiberte()) {
+                                        PlateauDeJeu.pieces[p.getX()][p.getY()] = null;
+                                        return true;
+                                    }
                                 }
                             }
                         }
+                        // si pour les quatre voisins, aucun groupe adversaire n'est privé de ses libertés alors c'est un suicide
+                        PlateauDeJeu.pieces[p.getX()][p.getY()] = null;
+                        vue.afficherErreur("Suicide : Position impossible");
+                        return false;
                     }
-                    // si pour les quatre voisins, aucun groupe adversaire n'est privé de ses libertés alors c'est un suicide
+                } else {
+                    // configuration déjà vue
                     PlateauDeJeu.pieces[p.getX()][p.getY()] = null;
+                    vue.afficherErreur("Règle du Ko : Configuration déjà rencontrée");
                     return false;
                 }
+
             } else {
-                // configuration déjà vue
-                PlateauDeJeu.pieces[p.getX()][p.getY()] = null;
+                // position deja prise
+                vue.afficherErreur("Position déjà occupée");
                 return false;
             }
-
         } else {
-            // position deja prise
+            // position hors limite
+            vue.afficherErreur("Position hors limite");
             return false;
         }
     }
@@ -257,4 +268,13 @@ public final class PlateauDeJeu {
     public static int getWidth() {
         return width;
     }
+
+    public static String getjBlanc() {
+        return jBlanc;
+    }
+
+    public static String getjNoir() {
+        return jNoir;
+    }
+    
 }
