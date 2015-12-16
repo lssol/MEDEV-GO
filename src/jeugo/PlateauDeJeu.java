@@ -164,16 +164,19 @@ public final class PlateauDeJeu {
                         if (piece != null) {
                             if (piece.getCouleur() == !couleur) {
                                 if (!piece.getGroupe().aLiberte()) {
+                                    PlateauDeJeu.pieces[p.getX()][p.getY()] = null;
                                     return true;
                                 }
                             }
                         }
                     }
                     // si pour les quatre voisins, aucun groupe adversaire n'est privé de ses libertés alors c'est un suicide
+                    PlateauDeJeu.pieces[p.getX()][p.getY()] = null;
                     return false;
                 }
             } else {
                 // configuration déjà vue
+                PlateauDeJeu.pieces[p.getX()][p.getY()] = null;
                 return false;
             }
 
