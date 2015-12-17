@@ -10,6 +10,7 @@ import java.awt.Panel;
 import java.awt.TextField;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import jeugo.Enregistrement;
 import jeugo.PlateauDeJeu;
 import jeugo.Position;
 import jeugo.exceptions.PasDePlateaudeCetteTaille;
@@ -29,13 +30,40 @@ public class Goban extends javax.swing.JFrame {
             pl = new PlateauDeJeu(9);
             cases = new Case[19][19];
             int taille = 0;
-            boolean tour = true;
+            tour = true;
         } catch (PasDePlateaudeCetteTaille ex) {
             Logger.getLogger(Goban.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     public void initCases(int taille){
+        menuBar1 = new java.awt.MenuBar();
+        menu1 = new java.awt.Menu();
+        menuItem1 = new java.awt.MenuItem();
+        menuItem2 = new java.awt.MenuItem();
+
+        menu1.setLabel("Partie");
+
+        menuItem1.setLabel("Sauvegarder");
+        menuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SauvegarderActionPerformed(evt);
+            }
+        });
+        menu1.add(menuItem1);
+
+        menuItem2.setLabel("Charger");
+        menuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ChargerActionPerformed(evt);
+            }
+        });
+        menu1.add(menuItem2);
+
+        menuBar1.add(menu1);
+        
+        setMenuBar(menuBar1);
+        
         mainPanel = new Panel();
         message = new TextField();
         
@@ -62,12 +90,12 @@ public class Goban extends javax.swing.JFrame {
             }
         }
         panel1.setSize(25*taille, 25*taille);
+        
         mainPanel.add(panel1);
         
         mainPanel.add(message);
         setContentPane(mainPanel);
-        setSize(27*taille,30*taille);
-        
+        setSize(27*taille,35*taille);
     }
      
      private void caseMouseClicked(java.awt.event.MouseEvent evt) {
@@ -77,15 +105,23 @@ public class Goban extends javax.swing.JFrame {
                  this.updatePlateau();
                  tour =!tour;
                  if (tour){
-                 message.setText("C'est au tour de "+pl.getjBlanc());
+                 message.setText("C'est au tour du joueur Blanc : "+pl.getjBlanc());
                  } else {
-                     message.setText("C'est au tour de "+pl.getjNoir());
+                     message.setText("C'est au tour du joueur Noir : "+pl.getjNoir());
                  }
              } else {
                  message.setText(res);
              }
              
     }
+     private void SauvegarderActionPerformed(java.awt.event.ActionEvent evt) {
+         // à corriger
+         String nomFichier = "test";
+         Enregistrement.enregistrer(nomFichier, pl);
+     }
+     private void ChargerActionPerformed(java.awt.event.ActionEvent evt) {
+         // a écrire
+     }
      
      private void updatePlateau(){
          for (int i = 0; i < this.pl.getWidth(); i++) {
@@ -169,6 +205,11 @@ public class Goban extends javax.swing.JFrame {
     private PlateauDeJeu pl;
     private boolean tour;
     private java.awt.TextField message;
+    
+    private java.awt.Menu menu1;
+    private java.awt.MenuBar menuBar1;
+    private java.awt.MenuItem menuItem1;
+    private java.awt.MenuItem menuItem2;
     
     public void setPlateauDeJeu(PlateauDeJeu p) throws PasDePlateaudeCetteTaille{
         this.pl=new PlateauDeJeu(p);
