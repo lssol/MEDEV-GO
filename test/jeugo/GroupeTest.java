@@ -37,11 +37,11 @@ public class GroupeTest {
     public void testGetLibertes() throws PasDePlateaudeCetteTaille {
         System.out.println("getLibertes");
 
-        PlateauDeJeu pl = new PlateauDeJeu(9);
+        PlateauDeJeu plateau = new PlateauDeJeu(9);
         Piece test4Lib = new Piece(true,new Position(1,1));
-        PlateauDeJeu.pieces[1][1] = test4Lib;
+        plateau.pieces[1][1] = test4Lib;
 
-        ArrayList<Position> result4Lib = test4Lib.getGroupe().getLibertes();
+        ArrayList<Position> result4Lib = test4Lib.getGroupe().getLibertes(plateau);
         assertTrue(result4Lib.size()==4);
         boolean a = false;
         boolean b = false;
@@ -65,12 +65,12 @@ public class GroupeTest {
         Piece p4 = new Piece(true, new Position(2,1));
         g.add(p4);
         g.mettreAjourLiensPieces();
-        PlateauDeJeu.pieces[1][0]= p1;
-        PlateauDeJeu.pieces[0][1] = p2;
-        PlateauDeJeu.pieces[1][2] = p3;
-        PlateauDeJeu.pieces[2][1] = p4;
+        plateau.pieces[1][0]= p1;
+        plateau.pieces[0][1] = p2;
+        plateau.pieces[1][2] = p3;
+        plateau.pieces[2][1] = p4;
        
-        ArrayList<Position> resultG = g.getLibertes();
+        ArrayList<Position> resultG = g.getLibertes(plateau);
         assertTrue(resultG.size() == 6);
         boolean e = false;
         boolean f = false;
@@ -87,7 +87,7 @@ public class GroupeTest {
             k = k|p.equals(new Position(0,2));
         }
         assertTrue(e && f && h && i && j && k == true);
-        assertTrue(test4Lib.getGroupe().getLibertes().isEmpty());
+        assertTrue(test4Lib.getGroupe().getLibertes(plateau).isEmpty());
     }
 
     /**
@@ -97,11 +97,11 @@ public class GroupeTest {
     public void testALiberte() throws PasDePlateaudeCetteTaille {
         System.out.println("aLiberte");
         
-        PlateauDeJeu pl = new PlateauDeJeu(9);
+        PlateauDeJeu plateau = new PlateauDeJeu(9);
         Piece test4Lib = new Piece(true,new Position(1,1));
-        PlateauDeJeu.pieces[1][1] = test4Lib;
+        plateau.pieces[1][1] = test4Lib;
 
-        assertTrue(test4Lib.getGroupe().aLiberte());
+        assertTrue(test4Lib.getGroupe().aLiberte(plateau));
         
         Groupe g = new Groupe();
         Piece p1 = new Piece(true, new Position(1,0));
@@ -113,13 +113,13 @@ public class GroupeTest {
         Piece p4 = new Piece(true, new Position(2,1));
         g.add(p4);
         g.mettreAjourLiensPieces();
-        PlateauDeJeu.pieces[1][0]= p1;
-        PlateauDeJeu.pieces[0][1] = p2;
-        PlateauDeJeu.pieces[1][2] = p3;
-        PlateauDeJeu.pieces[2][1] = p4;
+        plateau.pieces[1][0]= p1;
+        plateau.pieces[0][1] = p2;
+        plateau.pieces[1][2] = p3;
+        plateau.pieces[2][1] = p4;
        
-        assertTrue(g.aLiberte());
-        assertFalse(test4Lib.getGroupe().aLiberte());
+        assertTrue(g.aLiberte(plateau));
+        assertFalse(test4Lib.getGroupe().aLiberte(plateau));
         
     }
 
@@ -153,17 +153,17 @@ public class GroupeTest {
         
         /*Vue vue = new Vue();
         vue.afficherPlateau();*/
-        PlateauDeJeu.pieces[1][0].getGroupe().Supprimer();
+        plateau.pieces[1][0].getGroupe().supprimer(plateau);
 
-        if(    PlateauDeJeu.pieces[1][1] != null 
-            || PlateauDeJeu.pieces[1][0] != null 
-            || PlateauDeJeu.pieces[1][2] != null 
-            || PlateauDeJeu.pieces[0][2] != null )
+        if(    plateau.pieces[1][1] != null 
+            || plateau.pieces[1][0] != null 
+            || plateau.pieces[1][2] != null 
+            || plateau.pieces[0][2] != null )
         {
             //vue.afficherPlateau();
             fail("Il aurait du supprimer tout le groupe...");
         }
-        if(PlateauDeJeu.pieces[2][3] == null || PlateauDeJeu.pieces[1][4] == null){
+        if(plateau.pieces[2][3] == null || plateau.pieces[1][4] == null){
             //vue.afficherPlateau();
             fail("Celles là, il aurait pas du les supprimer");
         }

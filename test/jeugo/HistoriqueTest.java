@@ -151,11 +151,11 @@ public class HistoriqueTest {
      */
     @Test
     public void testSauvegarde() throws PasDePlateaudeCetteTaille {
-        PlateauDeJeu pl = new PlateauDeJeu(9);
-        PlateauDeJeu.pieces[0][0]=new Piece(true,new Position(0,0));
-        pl.historique.sauvegarde();
+        PlateauDeJeu plateau = new PlateauDeJeu(9);
+        plateau.pieces[0][0]=new Piece(true,new Position(0,0));
+        plateau.historique.sauvegarde(plateau);
         
-        assertTrue(pl.historique.existe(PlateauDeJeu.pieces));
+        assertTrue(plateau.historique.existe(plateau.pieces));
     }
 
     

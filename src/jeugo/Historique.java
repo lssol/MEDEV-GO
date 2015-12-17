@@ -31,7 +31,7 @@ public class Historique extends HashMap<Integer,ArrayList<Piece[][]>> implements
      * @param mat2 une matrice de pièces
      * @return un entier
      */
-    public int compareMat(Piece[][] mat1, Piece[][] mat2) {
+    public static int compareMat(Piece[][] mat1, Piece[][] mat2) {
         if (mat1.length == 0 || mat2.length == 0 || mat1.length != mat2.length) {
             return -1;
         } else {
@@ -138,21 +138,21 @@ public class Historique extends HashMap<Integer,ArrayList<Piece[][]>> implements
         }
     }
     
-    public void sauvegarde(){
+    public void sauvegarde(PlateauDeJeu plateau){
         int compteur = 0;
-        for (int i =0;i<PlateauDeJeu.getWidth();i++){
-            for (int j =0; j <PlateauDeJeu.getWidth();j++){
-                if (PlateauDeJeu.getPieces()[i][j] != null){
+        for (int i =0;i<plateau.getWidth();i++){
+            for (int j =0; j <plateau.getWidth();j++){
+                if (plateau.getPieces()[i][j] != null){
                     compteur ++;
                 }
             }
         }
         
         if (this.containsKey(compteur)){
-        this.get(compteur).add(PlateauDeJeu.pieces);
+        this.get(compteur).add(plateau.pieces);
         } else {
             ArrayList<Piece[][]> tmp = new ArrayList<>();
-            tmp.add(PlateauDeJeu.pieces);
+            tmp.add(plateau.pieces);
             this.put(compteur, tmp);
         }
     }

@@ -3,21 +3,19 @@ package jeugo;
 import java.io.Serializable;
 import java.util.Scanner;
 
-import static jeugo.PlateauDeJeu.pieces;
-
 /**
  * Created by seti on 03/12/15.
  */
 public class Vue implements Serializable{
     public Vue() {
     }
-    public void afficherPlateau(){
+    public void afficherPlateau(PlateauDeJeu plateau){
         System.out.println("DÉBUT AFFICHAGE DU PLATEAU DE JEU");
-        for(int i=0; i < pieces[0].length; i++) {
+        for(int i=0; i < plateau.pieces[0].length; i++) {
             String chaine = "";
-            for(int j=0; j < pieces[0].length; j++) {
-                if (pieces[i][j] != null) {
-                    if (pieces[i][j].getCouleur()) {
+            for(int j=0; j < plateau.pieces[0].length; j++) {
+                if (plateau.pieces[i][j] != null) {
+                    if (plateau.pieces[i][j].getCouleur()) {
                         chaine = chaine + "B";
                     } else {
                         chaine = chaine + "N";
@@ -68,12 +66,12 @@ public class Vue implements Serializable{
         return s;
     }
     
-    public void afficherTourJoueur(boolean couleur){
+    public void afficherTourJoueur(boolean couleur, PlateauDeJeu plateau){
         String nom = "";
         if (couleur){
-            nom = "Blanc : "+PlateauDeJeu.getjBlanc();
+            nom = "Blanc : " + plateau.getjBlanc();
         } else {
-            nom = "Noir : "+PlateauDeJeu.getjNoir();
+            nom = "Noir : " + plateau.getjNoir();
         }
         System.out.println("Tour du joueur "+nom);
     }

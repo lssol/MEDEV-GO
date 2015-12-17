@@ -66,33 +66,33 @@ public class Piece implements Serializable{
      * retourne la liste des libertés pour la pièce
      * @return liste de position qui sont des libertés de la pièce
      */
-    public ArrayList<Position> getibertes(){
+    public ArrayList<Position> getibertes(PlateauDeJeu plateau){
         
         ArrayList lib = new ArrayList<Position>();
 
-        if (position.getY() < PlateauDeJeu.getWidth() - 1) {
-            Piece haut = PlateauDeJeu.pieces[position.getX()][position.getY() + 1];
+        if (position.getY() < plateau.getWidth() - 1) {
+            Piece haut = plateau.pieces[position.getX()][position.getY() + 1];
             if (haut == null) {
                 lib.add(new Position(position.getX(),position.getY() + 1));
             }
         }
 
         if (position.getY() > 0) {
-            Piece bas = PlateauDeJeu.pieces[position.getX()][position.getY() - 1];
+            Piece bas = plateau.pieces[position.getX()][position.getY() - 1];
             if (bas == null) {
                 lib.add(new Position(position.getX(),position.getY() - 1));
             }
         }
         
-        if (position.getX() < PlateauDeJeu.getWidth() - 1) {
-            Piece droite = PlateauDeJeu.pieces[position.getX()+1][position.getY()];
+        if (position.getX() < plateau.getWidth() - 1) {
+            Piece droite = plateau.pieces[position.getX()+1][position.getY()];
             if (droite == null) {
                 lib.add(new Position(position.getX()+1,position.getY()));
             }
         }
 
         if (position.getX() > 0) {
-            Piece gauche = PlateauDeJeu.pieces[position.getX()-1][position.getY()];
+            Piece gauche = plateau.pieces[position.getX()-1][position.getY()];
             if (gauche == null) {
                 lib.add(new Position(position.getX()-1,position.getY()));
             }

@@ -36,17 +36,17 @@ public class PieceTest {
     @Test
     public void testGetibertes() throws PasDePlateaudeCetteTaille {
         System.out.println("getibertes");
-        PlateauDeJeu pl = new PlateauDeJeu(9);
+        PlateauDeJeu plateau = new PlateauDeJeu(9);
         Piece testCoin = new Piece(true,new Position(0,0));
-        PlateauDeJeu.pieces[0][0] = testCoin;
+        plateau.pieces[0][0] = testCoin;
         Piece test4Lib = new Piece(true,new Position(3,3));
-        PlateauDeJeu.pieces[3][3] = test4Lib;
+        plateau.pieces[3][3] = test4Lib;
         Piece testVoisins = new Piece(true,new Position(4,1));
-        PlateauDeJeu.pieces[4][1] = testVoisins ;
-        PlateauDeJeu.pieces[4][2] = new Piece(true,new Position(4,2));
-        PlateauDeJeu.pieces[5][1] = new Piece(true,new Position(5,1));
+        plateau.pieces[4][1] = testVoisins ;
+        plateau.pieces[4][2] = new Piece(true,new Position(4,2));
+        plateau.pieces[5][1] = new Piece(true,new Position(5,1));
         
-        ArrayList<Position> resultCoin = testCoin.getibertes();
+        ArrayList<Position> resultCoin = testCoin.getibertes(plateau);
         Position resCoin1 = new Position(0,1);
         Position resCoin2 = new Position (1,0);      
         if (resCoin1.equals(resultCoin.get(0)) && resCoin2.equals(resultCoin.get(1))){
@@ -59,7 +59,7 @@ public class PieceTest {
             fail("libertées manquantes");
         }
         
-        ArrayList<Position> result4Lib = test4Lib.getibertes();
+        ArrayList<Position> result4Lib = test4Lib.getibertes(plateau);
         Position res4Lib1 = new Position(3,4);
         Position res4Lib2 = new Position (3,2);
         Position res4Lib3 = new Position(4,3);
@@ -77,7 +77,7 @@ public class PieceTest {
         }
         
 
-        ArrayList<Position> ressultVoisins = testVoisins.getibertes();
+        ArrayList<Position> ressultVoisins = testVoisins.getibertes(plateau);
         Position resVoisins1 = new Position(4,0);
         Position resVoisins2 = new Position (3,1);
         if (resVoisins1.equals(ressultVoisins.get(0)) && resVoisins2.equals(ressultVoisins.get(1))){

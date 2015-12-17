@@ -22,7 +22,7 @@ public class Enregistrement {
         ObjectOutputStream oos = null;
 
         try {
-            final FileOutputStream fichier = new FileOutputStream(nomFichier + ".ser");
+            final FileOutputStream fichier = new FileOutputStream("Enregistrements/" + nomFichier + ".ser");
             oos = new ObjectOutputStream(fichier);
             oos.writeObject(plateau);
             oos.flush();
@@ -44,7 +44,7 @@ public class Enregistrement {
         ObjectInputStream ois = null;
         PlateauDeJeu plateau = null;
         try {
-            final FileInputStream fichier = new FileInputStream(nomFichier + ".ser");
+            final FileInputStream fichier = new FileInputStream("Enregistrements/" + nomFichier + ".ser");
             ois = new ObjectInputStream(fichier);
             plateau = (PlateauDeJeu) ois.readObject();
         } catch (final java.io.IOException e) {

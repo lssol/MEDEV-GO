@@ -23,10 +23,10 @@ public class Groupe extends ArrayList<Piece> implements Serializable{
      * retourne la liste des liberté d'un groupe, c'est à dire la liste des libertés des pièces du groupe
      * @return liste de position qui sont des libertés pour le groupe
      */
-    public ArrayList<Position> getLibertes(){
+    public ArrayList<Position> getLibertes(PlateauDeJeu plateau){
         ArrayList<Position> res = new ArrayList<>();
             for (Piece p:this){
-                for (Position posP : p.getibertes()){
+                for (Position posP : p.getibertes(plateau)){
                     boolean test = false;
                     for (Position posRes : res){
                         if (posP.equals(posRes)){
@@ -45,41 +45,35 @@ public class Groupe extends ArrayList<Piece> implements Serializable{
      * vérifie si un groupe a des libertés ou non
      * @return true si le groupe a au moins une liberté
      */
-    public boolean aLiberte(){
-        return !(this.getLibertes().isEmpty());
+    public boolean aLiberte(PlateauDeJeu plateau){
+        return !(this.getLibertes(plateau).isEmpty());
     }
     
     public int getOeils(){
         return 0;
     }
-
     /**
-     * Supprimer un groupe du plateau de jeu
-    */
-    void Supprimer() {
-        for(int i=0; i < PlateauDeJeu.pieces[0].length; i++) {
-            for(int j=0; j < PlateauDeJeu.pieces[0].length; j++) {
-                if(PlateauDeJeu.pieces[i][j] != null){
-                    if(PlateauDeJeu.pieces[i][j].getGroupe() == this){
-                        PlateauDeJeu.pieces[i][j] = null;
+     * Supprime un groupe d'une matrice fictive
+     * @param mat 
+     */
+    void supprimer(Piece[][] mat) {
+        for(int i=0; i < mat[0].length; i++) {
+            for(int j=0; j < mat[0].length; j++) {
+                if(mat[i][j] != null){
+                    if(mat[i][j].getGroupe() == this){
+                        mat[i][j] = null;
                     }
                 }
             }
         }
     }
     /**
-     * Supprime un groupe d'une matrice fictive
-     * @param mat 
-     */
-    void Supprimer(Piece[][] mat) {
-        for(int i=0; i < mat[0].length; i++) {
-            for(int j=0; j < mat[0].length; j++) {
-                if(mat[i][j].getGroupe() == this){
-                    mat[i][j] = null;
-                }
-            }
-        }
+     * Supprimer un groupe du plateau de jeu
+    */
+    void supprimer(PlateauDeJeu plateau) {
+        supprimer(plateau.pieces);
     }
+    
     /**
      * Pour toutes les pieces du groupe, met à jour l'attribut Groupe en le mettant à this
      */
@@ -88,6 +82,7 @@ public class Groupe extends ArrayList<Piece> implements Serializable{
             piece.setGroupe(this);
         }
     }
+    @Override
     public String toString(){
         String texte = "";
         for(Piece piece : this){

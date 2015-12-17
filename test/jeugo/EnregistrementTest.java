@@ -5,6 +5,7 @@
  */
 package jeugo;
 
+import java.io.File;
 import jeugo.exceptions.PasDePlateaudeCetteTaille;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -55,7 +56,7 @@ public class EnregistrementTest {
         
         System.out.println("charger");
         System.out.println("On sauvegarde ça : ");
-        vue.afficherPlateau();
+        vue.afficherPlateau(plateau);
         System.out.println("handicap = " + plateau.getHandicap());
         
         String nomFichier = "test";
@@ -63,10 +64,14 @@ public class EnregistrementTest {
         
         System.out.println("Et on charge ça : ");
         PlateauDeJeu plateau2 = Enregistrement.charger(nomFichier);
-        vue.afficherPlateau();
+        vue.afficherPlateau(plateau2);
         System.out.println("handicap = " + plateau2.getHandicap());
         
-        assertEquals(plateau2, plateau);
+        if(Historique.compareMat(plateau.pieces, plateau2.pieces) != 1){
+            fail("On enregistre on charge et on obtient pas les même matrices à la fin :/");
+        }
+        File testFile = new File("Enregistrements/" + nomFichier + ".ser"); 
+        testFile.delete();
     }
     
 }

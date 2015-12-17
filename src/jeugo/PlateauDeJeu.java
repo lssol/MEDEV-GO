@@ -25,19 +25,19 @@ public final class PlateauDeJeu implements Serializable {
      * Matrice des pièces sur le plateau de jeu
      */
 
-    public static Piece pieces[][];
+    public Piece pieces[][];
     /**
      * Taille du plateau de jeu
      */
-    private static int width;
+    private int width;
     /**
      * Nom du joueur blanc
      */
-    private static String jBlanc;
+    private String jBlanc;
     /**
      * Nom du joueur noir
      */
-    private static String jNoir;
+    private String jNoir;
     /**
      * Pièces capturées par le joueur blanc
      */
@@ -75,13 +75,13 @@ public final class PlateauDeJeu implements Serializable {
         if (!taillesOk.contains((Integer) width)) {
             throw new PasDePlateaudeCetteTaille(width);
         } else {
-            PlateauDeJeu.width = width;
+            this.width = width;
             pieces = new Piece[width][width];
         }
+        vue = new Vue();
     }
 
     public void chargerNoms() {
-        vue = new Vue();
         String[] noms = vue.demanderNomsJoueurs();
         jBlanc = noms[0];
         jNoir = noms[1];
@@ -108,8 +108,8 @@ public final class PlateauDeJeu implements Serializable {
      */
     private void supprimerGroupes() {
         for (Groupe groupe : groupesTampon) {
-            if (!groupe.aLiberte()) {
-                groupe.Supprimer();
+            if (!groupe.aLiberte(this)) {
+                groupe.supprimer(this);
             }
         }
     }
@@ -123,8 +123,8 @@ public final class PlateauDeJeu implements Serializable {
      */
     private void jouer(boolean couleur) {
         Vue vue = new Vue();
-        vue.afficherPlateau();
-        vue.afficherTourJoueur(couleur);
+        vue.afficherPlateau(this);
+        vue.afficherTourJoueur(couleur, this);
 
         // demander la position ou placer la pièce
         // vérifier la position : tant que la position incorrecte - redemander 
@@ -139,7 +139,7 @@ public final class PlateauDeJeu implements Serializable {
 
         // enregister l'état du plateau dans historique
         // enregister le mouvement dans le fichier texte
-        historique.sauvegarde();
+        historique.sauvegarde(this);
 
     }
 
@@ -154,37 +154,37 @@ public final class PlateauDeJeu implements Serializable {
      */
     public boolean verifierPosition(Position p, boolean couleur) {
         // position dns les limites du plateau
-        if (p.getX() < PlateauDeJeu.width && p.getY() < PlateauDeJeu.width && p.getX() >= 0 && p.getY() >= 0) {
+        if (p.getX() < width && p.getY() < width && p.getX() >= 0 && p.getY() >= 0) {
             //position libre
-            if (PlateauDeJeu.pieces[p.getX()][p.getY()] == null) {
+            if (pieces[p.getX()][p.getY()] == null) {
                 Piece tmp = new Piece(couleur, p);
-                PlateauDeJeu.pieces[p.getX()][p.getY()] = tmp;
+                pieces[p.getX()][p.getY()] = tmp;
                 // regle de Ko
                 if (!this.historique.existe(pieces)) {
                     // a des libertés
-                    if (!tmp.getibertes().isEmpty()) {
-                        PlateauDeJeu.pieces[p.getX()][p.getY()] = null;
+                    if (!tmp.getibertes(this).isEmpty()) {
+                        pieces[p.getX()][p.getY()] = null;
                         return true;
                     } else {
                         // suicide ou bien suppression d'un groupe tampon
                         for (Piece piece : getPiecesAutourDe(p)) {
                             if (piece != null) {
                                 if (piece.getCouleur() == !couleur) {
-                                    if (!piece.getGroupe().aLiberte()) {
-                                        PlateauDeJeu.pieces[p.getX()][p.getY()] = null;
+                                    if (!piece.getGroupe().aLiberte(this)) {
+                                        pieces[p.getX()][p.getY()] = null;
                                         return true;
                                     }
                                 }
                             }
                         }
                         // si pour les quatre voisins, aucun groupe adversaire n'est privé de ses libertés alors c'est un suicide
-                        PlateauDeJeu.pieces[p.getX()][p.getY()] = null;
+                        pieces[p.getX()][p.getY()] = null;
                         vue.afficherErreur("Suicide : Position impossible");
                         return false;
                     }
                 } else {
                     // configuration déjà vue
-                    PlateauDeJeu.pieces[p.getX()][p.getY()] = null;
+                    pieces[p.getX()][p.getY()] = null;
                     vue.afficherErreur("Règle du Ko : Configuration déjà rencontrée");
                     return false;
                 }
@@ -265,19 +265,19 @@ public final class PlateauDeJeu implements Serializable {
         return liste;
     }
 
-    public static Piece[][] getPieces() {
+    public Piece[][] getPieces() {
         return pieces;
     }
 
-    public static int getWidth() {
+    public int getWidth() {
         return width;
     }
 
-    public static String getjBlanc() {
+    public String getjBlanc() {
         return jBlanc;
     }
 
-    public static String getjNoir() {
+    public String getjNoir() {
         return jNoir;
     }
 
