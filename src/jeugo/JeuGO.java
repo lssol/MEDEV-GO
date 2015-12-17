@@ -5,6 +5,8 @@
  */
 package jeugo;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import jeugo.exceptions.PasDePlateaudeCetteTaille;
 
 /**
@@ -17,15 +19,17 @@ public class JeuGO {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        try {
+        /*try {
             PlateauDeJeu plateau = new PlateauDeJeu(16);
             plateau.tourDeJeu();
         } catch (PasDePlateaudeCetteTaille pasDePlateaudeCetteTaille) {
             pasDePlateaudeCetteTaille.printStackTrace();
-        }
-
-
-
+        }*/
+        PlateauDeJeu plateau;
+        
+        plateau = Enregistrement.charger("test");
+        System.out.println("handicap = " + plateau.getHandicap());
+        plateau.tourDeJeu();
     }
     
 }

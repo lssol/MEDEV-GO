@@ -5,6 +5,7 @@
  */
 package jeugo;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -15,7 +16,7 @@ import java.util.HashMap;
  * la valeur est une liste de matrices de pièces ayant le même nombre total de pièces
  * @author solenemoreau
  */
-public class Historique extends HashMap<Integer,ArrayList<Piece[][]>>{
+public class Historique extends HashMap<Integer,ArrayList<Piece[][]>> implements Serializable{
     
     public Historique() {
         super();

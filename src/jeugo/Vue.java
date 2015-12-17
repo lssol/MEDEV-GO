@@ -1,5 +1,6 @@
 package jeugo;
 
+import java.io.Serializable;
 import java.util.Scanner;
 
 import static jeugo.PlateauDeJeu.pieces;
@@ -7,7 +8,7 @@ import static jeugo.PlateauDeJeu.pieces;
 /**
  * Created by seti on 03/12/15.
  */
-public class Vue {
+public class Vue implements Serializable{
     public Vue() {
     }
     public void afficherPlateau(){

@@ -5,11 +5,13 @@
  */
 package jeugo;
 
+import java.io.Serializable;
+
 /**
  * Une position sur le plateau
  * @author oriane école
  */
-public class Position {
+public class Position implements Serializable {
     private int x;
     private int y;
     

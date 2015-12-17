@@ -5,6 +5,10 @@
  */
 package jeugo;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import jeugo.exceptions.PasDePlateaudeCetteTaille;
 
 import java.util.ArrayList;
@@ -16,7 +20,7 @@ import java.util.List;
  *
  * @author Sacha
  */
-public final class PlateauDeJeu {
+public final class PlateauDeJeu implements Serializable {
     /*
      * Matrice des pièces sur le plateau de jeu
      */
@@ -276,5 +280,13 @@ public final class PlateauDeJeu {
     public static String getjNoir() {
         return jNoir;
     }
-    
+
+    public void setHandicap(int i) {
+        this.handicap = i;
+    }
+
+    int getHandicap() {
+        return handicap;
+    }
+ 
 }

@@ -5,12 +5,13 @@
  */
 package jeugo;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /** Classe pour modéliser une pièce
  * @author solenemoreau
  */
-public class Piece {
+public class Piece implements Serializable{
     
     /**
      * couleur de la pièce (true = blanc, false = noir)

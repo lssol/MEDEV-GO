@@ -5,6 +5,7 @@
  */
 package jeugo;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 
@@ -12,7 +13,7 @@ import java.util.ArrayList;
  * Une liste de pieces dont on peut connaitre le nombre de libertes et d'oeils
  * @author solenemoreau, sacha
  */
-public class Groupe extends ArrayList<Piece> {
+public class Groupe extends ArrayList<Piece> implements Serializable{
 
     public Groupe() {
     super();
