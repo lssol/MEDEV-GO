@@ -5,6 +5,9 @@
  */
 package jeugo;
 
+import Interface.Goban;
+import Interface.Lancement;
+import javax.swing.JFrame;
 import jeugo.exceptions.PasDePlateaudeCetteTaille;
 
 /**
@@ -17,14 +20,12 @@ public class JeuGO {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        try {
-            PlateauDeJeu plateau = new PlateauDeJeu(16);
-            plateau.tourDeJeu();
-        } catch (PasDePlateaudeCetteTaille pasDePlateaudeCetteTaille) {
-            pasDePlateaudeCetteTaille.printStackTrace();
-        }
 
-
+        Goban goban = new Goban();
+        Lancement lancement = new Lancement(goban,true);
+        lancement.setVisible(true);
+                 
+        
 
     }
     

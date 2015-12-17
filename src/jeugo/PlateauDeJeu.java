@@ -276,5 +276,14 @@ public final class PlateauDeJeu {
     public static String getjNoir() {
         return jNoir;
     }
+
+    public static void setjBlanc(String jBlanc) {
+        PlateauDeJeu.jBlanc = jBlanc;
+    }
+
+    public static void setjNoir(String jNoir) {
+        PlateauDeJeu.jNoir = jNoir;
+    }
+    
     
 }
