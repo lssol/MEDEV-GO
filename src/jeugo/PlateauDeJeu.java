@@ -288,5 +288,12 @@ public final class PlateauDeJeu implements Serializable {
     int getHandicap() {
         return handicap;
     }
- 
+
+    public void setjBlanc(String jBlanc) {
+        this.jBlanc = jBlanc;
+    }
+
+    public void setjNoir(String jNoir) {
+        this.jNoir = jNoir;
+    }
 }
