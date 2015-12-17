@@ -122,21 +122,20 @@ public class Lancement extends javax.swing.JDialog {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try {
             // TODO add your handling code here:
-            PlateauDeJeu pl = new PlateauDeJeu(9);
-            versGoban(pl);
+            ((Goban)this.getParent()).setPlateauDeJeu(new PlateauDeJeu(9));
+            ((Goban)this.getParent()).initCases(9);
+            versGoban();
         } catch (PasDePlateaudeCetteTaille ex) {
             Logger.getLogger(Lancement.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        
+        }  
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
+        
                 try {
-            // TODO add your handling code here:
-            PlateauDeJeu pl = new PlateauDeJeu(16);
-            versGoban(pl);
+            ((Goban)this.getParent()).setPlateauDeJeu(new PlateauDeJeu(16));
+            ((Goban)this.getParent()).initCases(16);
+            versGoban();
         } catch (PasDePlateaudeCetteTaille ex) {
             Logger.getLogger(Lancement.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -146,19 +145,20 @@ public class Lancement extends javax.swing.JDialog {
         // TODO add your handling code here:
                 try {
             // TODO add your handling code here:
-            PlateauDeJeu pl = new PlateauDeJeu(19);
-            versGoban(pl);
+            ((Goban)this.getParent()).setPlateauDeJeu(new PlateauDeJeu(19));
+            ((Goban)this.getParent()).initCases(19);
+            versGoban();
         } catch (PasDePlateaudeCetteTaille ex) {
             Logger.getLogger(Lancement.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void versGoban(PlateauDeJeu pl) {
-        pl.setjBlanc(jTextField1.getText());
-        pl.setjNoir(jTextField2.getText());
+    private void versGoban() {
+        ((Goban)this.getParent()).getPlateauDeJeu().setjBlanc(jTextField1.getText());
+        ((Goban)this.getParent()).getPlateauDeJeu().setjNoir(jTextField2.getText());
+
         this.setVisible(false);
         this.getParent().setVisible(true);
-        ((Goban)this.getParent()).setPlateauDeJeu(pl);
     }
 
     /**

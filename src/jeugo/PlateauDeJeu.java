@@ -5,9 +5,6 @@
  */
 package jeugo;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import jeugo.exceptions.PasDePlateaudeCetteTaille;
 
@@ -295,5 +292,23 @@ public final class PlateauDeJeu implements Serializable {
 
     public void setjNoir(String jNoir) {
         this.jNoir = jNoir;
+    }
+    
+    public PlateauDeJeu(PlateauDeJeu pl){
+       // this.groupesTampon = new ArrayList<>(pl.groupesTampon);
+        this.handicap = pl.handicap;
+        this.jBlanc = pl.jBlanc;
+        this.jNoir = pl.jNoir;
+        this.pieces = pl.pieces;
+        //this.prisonBlanc = new ArrayList<>(pl.prisonBlanc);
+        //this.prisonNoir = new ArrayList<> (pl.prisonNoir);
+        this.width = pl.width;
+        for (int i = 0; i < pieces.length; i++) {
+            for (int j = 0; j < pieces.length; j++) {
+               this.pieces[i][j] = pl.pieces[i][j];
+            }           
+        }
+        this.taillesOk = new ArrayList(pl.taillesOk);
+        //this.historique = pl.historique;
     }
 }

@@ -5,10 +5,12 @@
  */
 package interfaceGraphique;
 
-import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Panel;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import jeugo.PlateauDeJeu;
+import jeugo.exceptions.PasDePlateaudeCetteTaille;
 
 /**
  *
@@ -20,13 +22,18 @@ public class Goban extends javax.swing.JFrame {
      * Creates new form Goban2
      */
     public Goban() {
-        //initComponents();
-        cases = new Case[19][19];
-        //int taille = pl.getWidth();
-        initCases(9);
+        try {
+            //initComponents();
+            pl = new PlateauDeJeu(9);
+            cases = new Case[19][19];
+            int taille = 0;
+            //initCases(taille);
+        } catch (PasDePlateaudeCetteTaille ex) {
+            Logger.getLogger(Goban.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
-    private void initCases(int taille){
+    public void initCases(int taille){
  
         panel1 = new Panel();
         GridLayout grille = new GridLayout(taille,taille,0,0);
@@ -138,7 +145,10 @@ public class Goban extends javax.swing.JFrame {
     private PlateauDeJeu pl;
     
     public void setPlateauDeJeu(PlateauDeJeu p){
-        this.pl=p;
+        this.pl=new PlateauDeJeu(p);
+    }
+    public PlateauDeJeu getPlateauDeJeu(){
+        return pl;
     }
 }
 
