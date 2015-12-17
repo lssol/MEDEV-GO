@@ -91,9 +91,9 @@ public final class PlateauDeJeu implements Serializable {
         this.chargerNoms();
         for (int i = 0; i < 10; i++) {
             //Les blancs jouent
-            jouer(true);
+            PlateauDeJeu.this.jouer(true);
             //Les noirs
-            jouer(false);
+            PlateauDeJeu.this.jouer(false);
         }
     }
 
@@ -118,7 +118,7 @@ public final class PlateauDeJeu implements Serializable {
      *
      * @param couleur est la couleur qui joue : true = blanc
      */
-    private void jouer(boolean couleur) {
+    public void jouer(boolean couleur) {
         Vue vue = new Vue();
         vue.afficherPlateau(this);
         vue.afficherTourJoueur(couleur, this);
@@ -137,9 +137,25 @@ public final class PlateauDeJeu implements Serializable {
         // enregister l'état du plateau dans historique
         // enregister le mouvement dans le fichier texte
         historique.sauvegarde(this);
-
     }
-
+    
+    public String jouer(Position pos, boolean couleur){
+        String res = "";
+        // demander la position ou placer la pièce
+        // vérifier la position : tant que la position incorrecte - redemander 
+        if (this.verifierPosition(pos, couleur)) {
+            this.insererPiece(pos, couleur);
+            res = "ok";
+             // enregister l'état du plateau dans historique
+            // enregister le mouvement dans le fichier texte
+            //historique.sauvegarde(this);
+            return res;
+        } else {
+            res = "position impossible";
+            return res;
+        }
+    }
+    
     /**
      * vérifie la conformité d'une position choisie avec les règles du GO -
      * position libre - regle de Ko (historique) - a des libertés - si pas de
@@ -157,7 +173,7 @@ public final class PlateauDeJeu implements Serializable {
                 Piece tmp = new Piece(couleur, p);
                 pieces[p.getX()][p.getY()] = tmp;
                 // regle de Ko
-                if (!this.historique.existe(pieces)) {
+//                if (!this.historique.existe(pieces)) {
                     // a des libertés
                     if (!tmp.getibertes(this).isEmpty()) {
                         pieces[p.getX()][p.getY()] = null;
@@ -176,24 +192,27 @@ public final class PlateauDeJeu implements Serializable {
                         }
                         // si pour les quatre voisins, aucun groupe adversaire n'est privé de ses libertés alors c'est un suicide
                         pieces[p.getX()][p.getY()] = null;
-                        vue.afficherErreur("Suicide : Position impossible");
+                        String err = "Suicide : Position impossible";
+                        //vue.afficherErreur(err);
                         return false;
                     }
-                } else {
-                    // configuration déjà vue
-                    pieces[p.getX()][p.getY()] = null;
-                    vue.afficherErreur("Règle du Ko : Configuration déjà rencontrée");
-                    return false;
-                }
+//                } else {
+//                    // configuration déjà vue
+//                    pieces[p.getX()][p.getY()] = null;
+//                    vue.afficherErreur("Règle du Ko : Configuration déjà rencontrée");
+//                    return false;
+//                }
 
             } else {
                 // position deja prise
-                vue.afficherErreur("Position déjà occupée");
+                String err="Position déjà occupée";
+                //vue.afficherErreur(err);
                 return false;
             }
         } else {
             // position hors limite
-            vue.afficherErreur("Position hors limite");
+            String err="Position hors limite";
+            //vue.afficherErreur(err);
             return false;
         }
     }
@@ -294,8 +313,8 @@ public final class PlateauDeJeu implements Serializable {
         this.jNoir = jNoir;
     }
     
-    public PlateauDeJeu(PlateauDeJeu pl){
-       // this.groupesTampon = new ArrayList<>(pl.groupesTampon);
+    public PlateauDeJeu(PlateauDeJeu pl) throws PasDePlateaudeCetteTaille{
+       new PlateauDeJeu(pl.width);
         this.handicap = pl.handicap;
         this.jBlanc = pl.jBlanc;
         this.jNoir = pl.jNoir;

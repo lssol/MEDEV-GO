@@ -7,9 +7,11 @@ package interfaceGraphique;
 
 import java.awt.GridLayout;
 import java.awt.Panel;
+import java.awt.TextField;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import jeugo.PlateauDeJeu;
+import jeugo.Position;
 import jeugo.exceptions.PasDePlateaudeCetteTaille;
 
 /**
@@ -27,13 +29,18 @@ public class Goban extends javax.swing.JFrame {
             pl = new PlateauDeJeu(9);
             cases = new Case[19][19];
             int taille = 0;
-            //initCases(taille);
+            boolean tour = true;
         } catch (PasDePlateaudeCetteTaille ex) {
             Logger.getLogger(Goban.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     public void initCases(int taille){
+        mainPanel = new Panel();
+        message = new TextField();
+        
+        message.setEditable(false);
+        message.setColumns(25);
  
         panel1 = new Panel();
         GridLayout grille = new GridLayout(taille,taille,0,0);
@@ -54,16 +61,45 @@ public class Goban extends javax.swing.JFrame {
                 panel1.add(cases[i][j]);
             }
         }
-        setContentPane(panel1);
-        setSize(25*taille, 25*taille);
-        setResizable(false);
+        panel1.setSize(25*taille, 25*taille);
+        mainPanel.add(panel1);
+        
+        mainPanel.add(message);
+        setContentPane(mainPanel);
+        setSize(27*taille,30*taille);
         
     }
-    
+     
      private void caseMouseClicked(java.awt.event.MouseEvent evt) {
-        // TODO add your handling code here:
-         ((Case)evt.getSource()).setAffichage(true);
+             Position pos = new Position(((Case) evt.getSource()).getPosX(), ((Case) evt.getSource()).getPosY());
+             String res = pl.jouer(pos, tour);
+             if (res=="ok"){
+                 this.updatePlateau();
+                 tour =!tour;
+                 if (tour){
+                 message.setText("C'est au tour de "+pl.getjBlanc());
+                 } else {
+                     message.setText("C'est au tour de "+pl.getjNoir());
+                 }
+             } else {
+                 message.setText(res);
+             }
+             
     }
+     
+     private void updatePlateau(){
+         for (int i = 0; i < this.pl.getWidth(); i++) {
+            for (int j = 0; j < this.pl.getWidth(); j++) {
+                if (this.pl.pieces[i][j]!=null){
+                    cases[i][j].setAffichage(this.pl.pieces[i][j].getCouleur());
+                } else {
+                    cases[i][j].setVide();
+                }
+            }
+         }
+     }
+
+     
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -73,30 +109,17 @@ public class Goban extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        panel1 = new java.awt.Panel();
-
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        javax.swing.GroupLayout panel1Layout = new javax.swing.GroupLayout(panel1);
-        panel1.setLayout(panel1Layout);
-        panel1Layout.setHorizontalGroup(
-            panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 207, Short.MAX_VALUE)
-        );
-        panel1Layout.setVerticalGroup(
-            panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 184, Short.MAX_VALUE)
-        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGap(0, 224, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGap(0, 266, Short.MAX_VALUE)
         );
 
         pack();
@@ -139,12 +162,15 @@ public class Goban extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private java.awt.Panel panel1;
     // End of variables declaration//GEN-END:variables
+    private java.awt.Panel mainPanel;
+    private java.awt.Panel panel1;
     private Case[][] cases;
     private PlateauDeJeu pl;
+    private boolean tour;
+    private java.awt.TextField message;
     
-    public void setPlateauDeJeu(PlateauDeJeu p){
+    public void setPlateauDeJeu(PlateauDeJeu p) throws PasDePlateaudeCetteTaille{
         this.pl=new PlateauDeJeu(p);
     }
     public PlateauDeJeu getPlateauDeJeu(){

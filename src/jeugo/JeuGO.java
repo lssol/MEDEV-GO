@@ -24,7 +24,7 @@ public class JeuGO {
 
         Goban goban = new Goban();
         Lancement lancement = new Lancement(goban,true);
-        lancement.setVisible(true);
+        lancement.setVisible(true);       
     }
     
 }

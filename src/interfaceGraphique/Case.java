@@ -48,9 +48,12 @@ public class Case extends JLabel{
         if (couleur) {
             this.setIcon((Icon) new ImageIcon("case-blanc.png"));
         } else {
-            this.setIcon((Icon) new ImageIcon("case-noir.png"));
-            
+            this.setIcon((Icon) new ImageIcon("case-noir.png"));  
         }
+    }
+    
+    public void setVide(){
+        this.setIcon((Icon) new ImageIcon("case-vide.png"));
     }
     
     
