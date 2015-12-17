@@ -57,13 +57,14 @@ public class GroupeTest {
         
         Groupe g = new Groupe();
         Piece p1 = new Piece(true, new Position(1,0));
-        p1.setGroupe(g);
+        g.add(p1);
         Piece p2 = new Piece(true, new Position(0,1));
-        p2.setGroupe(g);
+        g.add(p2);
         Piece p3 = new Piece(true, new Position(1,2));
-        p3.setGroupe(g);
+        g.add(p3);
         Piece p4 = new Piece(true, new Position(2,1));
-        p4.setGroupe(g);
+        g.add(p4);
+        g.mettreAjourLiensPieces();
         PlateauDeJeu.pieces[1][0]= p1;
         PlateauDeJeu.pieces[0][1] = p2;
         PlateauDeJeu.pieces[1][2] = p3;
@@ -104,13 +105,14 @@ public class GroupeTest {
         
         Groupe g = new Groupe();
         Piece p1 = new Piece(true, new Position(1,0));
-        p1.setGroupe(g);
+        g.add(p1);
         Piece p2 = new Piece(true, new Position(0,1));
-        p2.setGroupe(g);
+        g.add(p2);
         Piece p3 = new Piece(true, new Position(1,2));
-        p3.setGroupe(g);
+        g.add(p3);
         Piece p4 = new Piece(true, new Position(2,1));
-        p4.setGroupe(g);
+        g.add(p4);
+        g.mettreAjourLiensPieces();
         PlateauDeJeu.pieces[1][0]= p1;
         PlateauDeJeu.pieces[0][1] = p2;
         PlateauDeJeu.pieces[1][2] = p3;
