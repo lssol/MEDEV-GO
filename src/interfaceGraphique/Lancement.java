@@ -3,9 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Interface;
+package interfaceGraphique;
 
-import Interface.Goban;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import jeugo.PlateauDeJeu;
@@ -124,7 +123,7 @@ public class Lancement extends javax.swing.JDialog {
         try {
             // TODO add your handling code here:
             PlateauDeJeu pl = new PlateauDeJeu(9);
-            versGoban();
+            versGoban(pl);
         } catch (PasDePlateaudeCetteTaille ex) {
             Logger.getLogger(Lancement.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -137,7 +136,7 @@ public class Lancement extends javax.swing.JDialog {
                 try {
             // TODO add your handling code here:
             PlateauDeJeu pl = new PlateauDeJeu(16);
-            versGoban();
+            versGoban(pl);
         } catch (PasDePlateaudeCetteTaille ex) {
             Logger.getLogger(Lancement.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -148,18 +147,20 @@ public class Lancement extends javax.swing.JDialog {
                 try {
             // TODO add your handling code here:
             PlateauDeJeu pl = new PlateauDeJeu(19);
-            versGoban();
+            versGoban(pl);
         } catch (PasDePlateaudeCetteTaille ex) {
             Logger.getLogger(Lancement.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void versGoban(){
-        PlateauDeJeu.setjBlanc(jTextField1.getText());
-            PlateauDeJeu.setjNoir(jTextField2.getText());
-            this.setVisible(false);
-            this.getParent().setVisible(true);
+    private void versGoban(PlateauDeJeu pl) {
+        pl.setjBlanc(jTextField1.getText());
+        pl.setjNoir(jTextField2.getText());
+        this.setVisible(false);
+        this.getParent().setVisible(true);
+        ((Goban)this.getParent()).setPlateauDeJeu(pl);
     }
+
     /**
      * @param args the command line arguments
      */

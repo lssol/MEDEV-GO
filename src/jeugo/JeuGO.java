@@ -7,8 +7,8 @@ package jeugo;
 
 
 
-import Interface.Goban;
-import Interface.Lancement;
+import interfaceGraphique.Goban;
+import interfaceGraphique.Lancement;
 
 
 /**
