@@ -5,10 +5,7 @@
  */
 package jeugo;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import jeugo.exceptions.AhYaDejaQuelquUnIci;
 import jeugo.exceptions.PasDePlateaudeCetteTaille;
 import org.junit.After;
@@ -54,21 +51,6 @@ public class PlateauDeJeuTest {
     }
 
     /**
-     * Test of tourDeJeu method, of class PlateauDeJeu.
-     */
-    @Ignore
-    @Test
-    public void testTourDeJeu() throws PasDePlateaudeCetteTaille {
-        System.out.println("tourDeJeu");
-        plateau = new PlateauDeJeu(16);
-        try{
-            plateau.tourDeJeu();
-        }catch(Exception e){
-            fail(e.toString());
-        }
-    }
-
-    /**
      * Test of insererPiece method, of class PlateauDeJeu.
      */
     @Test
@@ -111,18 +93,6 @@ public class PlateauDeJeuTest {
         }
     }
 
-    /**
-     * Test of chargerNoms method, of class PlateauDeJeu.
-     */
-    @Ignore
-    @Test
-    public void testChargerNoms() {
-        System.out.println("chargerNoms");
-        PlateauDeJeu instance = null;
-        instance.chargerNoms();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
     
 
 /**

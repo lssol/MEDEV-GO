@@ -10,23 +10,25 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
+ * CLASSE NON UTILISEE POUR L'INSTANT
  * Classe qui hérite de la classe Java HashMap<Integer,ArrayList<Piece[][]>>
- * Permet de stocker l'historique des configurations de jeu
- * la clé est le nombre de pièces dans la configuration
- * la valeur est une liste de matrices de pièces ayant le même nombre total de pièces
+ * Permet de stocker l'historique des configurations de jeu la clé est le nombre
+ * de pièces dans la configuration la valeur est une liste de matrices de pièces
+ * ayant le même nombre total de pièces
+ *
  * @author solenemoreau
  */
-public class Historique extends HashMap<Integer,ArrayList<Piece[][]>> implements Serializable{
-    
+public class Historique extends HashMap<Integer, ArrayList<Piece[][]>> implements Serializable {
+
     public Historique() {
         super();
     }
-    
+
     /**
-     * Compare deux matrices de pièces
-     * Renvoie 1 si elles sont identiques
-     * Renvoie -1 si elles sont non comparables (de tailles différentes ou vides)
-     * Renvoie 0 si elles sont comparables mais différentes
+     * Compare deux matrices de pièces Renvoie 1 si elles sont identiques
+     * Renvoie -1 si elles sont non comparables (de tailles différentes ou
+     * vides) Renvoie 0 si elles sont comparables mais différentes
+     *
      * @param mat1 une matrice de pièces
      * @param mat2 une matrice de pièces
      * @return un entier
@@ -48,11 +50,11 @@ public class Historique extends HashMap<Integer,ArrayList<Piece[][]>> implements
                     if (mat1[m][n] == null && mat2[m][n] == null) {
                         // les 2 matrices sont vides pour la case [m][n]
                         // mise à jour des indices de parcours m et n
-                        if (n<nn-1) { // est-on sur la dernière colonne ?
+                        if (n < nn - 1) { // est-on sur la dernière colonne ?
                             n++;
                         } else {
-                            if (m<mm-1) { // est-on sur la dernière ligne ?
-                                n=0;
+                            if (m < mm - 1) { // est-on sur la dernière ligne ?
+                                n = 0;
                                 m++;
                             } else {
                                 finParcours = true;
@@ -66,11 +68,11 @@ public class Historique extends HashMap<Integer,ArrayList<Piece[][]>> implements
                             // la case [m][n] n'est vide dans aucune des 2 matrices
                             if (mat1[m][n].compareCouleurPosition(mat2[m][n])) {
                                 // mise à jour des indices de parcours m et n
-                                if (n<nn-1) { // est-on sur la dernière colonne ?
+                                if (n < nn - 1) { // est-on sur la dernière colonne ?
                                     n++;
                                 } else {
-                                    if (m<mm-1) { // est-on sur la dernière ligne ?
-                                        n=0;
+                                    if (m < mm - 1) { // est-on sur la dernière ligne ?
+                                        n = 0;
                                         m++;
                                     } else {
                                         finParcours = true;
@@ -92,9 +94,10 @@ public class Historique extends HashMap<Integer,ArrayList<Piece[][]>> implements
             }
         }
     }
-    
+
     /**
      * Teste si une configuration des pièces a déjà existé plus tôt dans le jeu
+     *
      * @param mat une matrice de pièces (une configurations de pièces)
      * @return un booléen
      */
@@ -106,25 +109,25 @@ public class Historique extends HashMap<Integer,ArrayList<Piece[][]>> implements
                 if (mat[i][j] != null) {
                     nbPieces++;
                 }
-            }    
+            }
         }
         // on regarde s'il y a déjà eu une configuration similaire
         // en se limiant aux configurations ayant le même nombre de pièces
         if (this.containsKey(nbPieces)) {
             // il existe une configuration avec le même nombre de pièces
             ArrayList<Piece[][]> listeMatPieces = this.get(nbPieces);
-            boolean trouve = false; 
+            boolean trouve = false;
             // trouve passera à true lorsqu'une configuration similaire sera trouvée
             boolean finParcours = false;
             // finParcours passera à true lorsque toute la liste aura été parcourue
             int indListe = 0;
             while (!trouve && !finParcours && listeMatPieces.get(indListe) != null) {
-                if (compareMat(mat,listeMatPieces.get(indListe)) == 1) {
+                if (compareMat(mat, listeMatPieces.get(indListe)) == 1) {
                     // on a trouvé une configuration similaire
                     trouve = true;
                 }
                 // mise à jour de indListe
-                if (indListe < listeMatPieces.size()-1) {
+                if (indListe < listeMatPieces.size() - 1) {
                     indListe++;
                 } else {
                     // on a fini de parcourir la liste
@@ -137,19 +140,19 @@ public class Historique extends HashMap<Integer,ArrayList<Piece[][]>> implements
             return false;
         }
     }
-    
-    public void sauvegarde(PlateauDeJeu plateau){
+
+    public void sauvegarde(PlateauDeJeu plateau) {
         int compteur = 0;
-        for (int i =0;i<plateau.getWidth();i++){
-            for (int j =0; j <plateau.getWidth();j++){
-                if (plateau.getPieces()[i][j] != null){
-                    compteur ++;
+        for (int i = 0; i < plateau.getWidth(); i++) {
+            for (int j = 0; j < plateau.getWidth(); j++) {
+                if (plateau.getPieces()[i][j] != null) {
+                    compteur++;
                 }
             }
         }
-        
-        if (this.containsKey(compteur)){
-        this.get(compteur).add(plateau.pieces);
+
+        if (this.containsKey(compteur)) {
+            this.get(compteur).add(plateau.pieces);
         } else {
             ArrayList<Piece[][]> tmp = new ArrayList<>();
             tmp.add(plateau.pieces);

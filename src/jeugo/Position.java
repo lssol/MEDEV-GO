@@ -8,21 +8,29 @@ package jeugo;
 import java.io.Serializable;
 
 /**
- * Une position sur le plateau
+ * Classe pour décrirer une position sur le plateau
+ *
  * @author oriane école
  */
 public class Position implements Serializable {
+
+    /**
+     * Position x
+     */
     private int x;
+    /**
+     * Position y
+     */
     private int y;
-    
-    public Position(int x,int y){
+
+    public Position(int x, int y) {
         this.x = x;
         this.y = y;
     }
-    
-    public Position (){
-       this.x = 0;
-       this.y = 0;
+
+    public Position() {
+        this.x = 0;
+        this.y = 0;
     }
 
     public int getX() {
@@ -40,8 +48,8 @@ public class Position implements Serializable {
     public void setY(int y) {
         this.y = y;
     }
-   
-    public boolean equals (Position p){
+
+    public boolean equals(Position p) {
         return this.x == p.x && this.y == p.y;
     }
 }

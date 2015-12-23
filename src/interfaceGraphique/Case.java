@@ -5,18 +5,25 @@
  */
 package interfaceGraphique;
 
-import java.awt.event.ActionListener;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 /**
+ * Classe pour décrire une case du goban
  *
  * @author oriane école
  */
-public class Case extends JLabel{
-        private int posX;
-        private int posY;
+public class Case extends JLabel {
+
+    /**
+     * Position X (ligne)
+     */
+    private int posX;
+    /**
+     * Position Y (colonne)
+     */
+    private int posY;
 
     public int getPosX() {
         return posX;
@@ -33,28 +40,36 @@ public class Case extends JLabel{
     public void setPosY(int posY) {
         this.posY = posY;
     }
-        
-    public Case (int x, int y){
+
+    public Case(int x, int y) {
         super(new ImageIcon("case-vide.png"));
-        this.setPosX(x);
-        this.setPosY(y);
+        this.posX = x;
+        this.posY = y;
         this.setBounds(0, 0, 25, 25);
         this.setPreferredSize(new java.awt.Dimension(25, 25));
         this.setMaximumSize(new java.awt.Dimension(25, 25));
-        this.setMinimumSize(new java.awt.Dimension(25, 25));    
+        this.setMinimumSize(new java.awt.Dimension(25, 25));
     }
-    
-    public void setAffichage(boolean couleur){
+
+    /**
+     * Méthode qui change une case vide en une case avec une pierre
+     *
+     * @param couleur un booléen représentant la couleur de la pierre (true =
+     * blanc)
+     */
+    public void setAffichage(boolean couleur) {
         if (couleur) {
             this.setIcon((Icon) new ImageIcon("case-blanc.png"));
         } else {
-            this.setIcon((Icon) new ImageIcon("case-noir.png"));  
+            this.setIcon((Icon) new ImageIcon("case-noir.png"));
         }
     }
-    
-    public void setVide(){
+
+    /**
+     * Méthode qui change une case avec une pierre en une case vide
+     */
+    public void setVide() {
         this.setIcon((Icon) new ImageIcon("case-vide.png"));
     }
-    
-    
-    }
+
+}

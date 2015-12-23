@@ -5,26 +5,27 @@
  */
 package jeugo;
 
-
-
 import interfaceGraphique.Goban;
 import interfaceGraphique.Lancement;
 
-
 /**
+ * Classe principale
  *
  * @author solenemoreau
  */
 public class JeuGO {
 
     /**
+     * Méthode main
+     *
      * @param args the command line arguments
      */
     public static void main(String[] args) {
 
         Goban goban = new Goban();
-        Lancement lancement = new Lancement(goban,true);
-        lancement.setVisible(true);       
+        Lancement lancement = new Lancement(goban, true);
+        lancement.setVisible(true);
+
     }
-    
+
 }

@@ -8,32 +8,34 @@ package jeugo;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-/** Classe pour modéliser une pièce
+/**
+ * Classe pour modéliser une pièce
+ *
  * @author solenemoreau
  */
-public class Piece implements Serializable{
-    
+public class Piece implements Serializable {
+
     /**
-     * couleur de la pièce (true = blanc, false = noir)
+     * Couleur de la pièce (true = blanc, false = noir)
      */
     private boolean couleur;
-    
+
     /**
-     * groupe dont fait partie la pièce
-     * ce groupe peut être constitué d'une seule pièce
+     * Groupe dont fait partie la pièce ce groupe peut être constitué d'une
+     * seule pièce
      */
     private Groupe groupe;
-    
+
     /**
-     * position de la pièce
+     * Position de la pièce
      */
     private Position position;
-    
-    public Piece(boolean c, Position p){
+
+    public Piece(boolean c, Position p) {
         this.couleur = c;
         this.groupe = new Groupe();
         groupe.add(this);
-        this.position=p;
+        this.position = p;
     }
 
     public boolean getCouleur() {
@@ -44,10 +46,10 @@ public class Piece implements Serializable{
         return groupe;
     }
 
-    public Position getPosition(){
+    public Position getPosition() {
         return position;
     }
-    
+
     public void setCouleur(boolean couleur) {
         this.couleur = couleur;
     }
@@ -57,65 +59,67 @@ public class Piece implements Serializable{
         this.groupe = groupe;
         //this.groupe.add(this);
     }
-    
-    public void setPosition(Position p){
-     this.position = p;   
+
+    public void setPosition(Position p) {
+        this.position = p;
     }
-    
+
     /**
-     * retourne la liste des libertés pour la pièce
-     * @return liste de position qui sont des libertés de la pièce
+     * Méthode qui retourne la liste des libertés pour la pièce
+     *
+     * @param plateau un PlateauDeJeu
+     * @return une liste de positions qui sont des libertés de la pièce
      */
-    public ArrayList<Position> getibertes(PlateauDeJeu plateau){
-        
-        ArrayList lib = new ArrayList<Position>();
+    public ArrayList<Position> getibertes(PlateauDeJeu plateau) {
+
+        ArrayList lib = new ArrayList<>();
 
         if (position.getY() < plateau.getWidth() - 1) {
             Piece haut = plateau.pieces[position.getX()][position.getY() + 1];
             if (haut == null) {
-                lib.add(new Position(position.getX(),position.getY() + 1));
+                lib.add(new Position(position.getX(), position.getY() + 1));
             }
         }
 
         if (position.getY() > 0) {
             Piece bas = plateau.pieces[position.getX()][position.getY() - 1];
             if (bas == null) {
-                lib.add(new Position(position.getX(),position.getY() - 1));
+                lib.add(new Position(position.getX(), position.getY() - 1));
             }
         }
-        
+
         if (position.getX() < plateau.getWidth() - 1) {
-            Piece droite = plateau.pieces[position.getX()+1][position.getY()];
+            Piece droite = plateau.pieces[position.getX() + 1][position.getY()];
             if (droite == null) {
-                lib.add(new Position(position.getX()+1,position.getY()));
+                lib.add(new Position(position.getX() + 1, position.getY()));
             }
         }
 
         if (position.getX() > 0) {
-            Piece gauche = plateau.pieces[position.getX()-1][position.getY()];
+            Piece gauche = plateau.pieces[position.getX() - 1][position.getY()];
             if (gauche == null) {
-                lib.add(new Position(position.getX()-1,position.getY()));
+                lib.add(new Position(position.getX() - 1, position.getY()));
             }
         }
 
         return lib;
     }
-    
+
     /**
-     * Compare la position et la couleur de la pièce actuelle avec une autre pièce
-     * Renvoie true si c'est identique
-     * Renvoie false sinon
+     * Méthode qui compare la position et la couleur de la pièce actuelle avec
+     * une autre pièce
+     *
      * @param p une pièce
-     * @return 
+     * @return un booléen (true si c'est identique, false sinon)
      */
     public boolean compareCouleurPosition(Piece p) {
         return this.couleur == p.getCouleur() && this.position.equals(p.getPosition());
     }
-    
-    public String toString(){
+
+    public String toString() {
         String texteCouleur;
         texteCouleur = couleur ? "Blanc" : "Noir";
-        
+
         return texteCouleur + " : (" + this.position.getX() + ", " + this.position.getY() + ")";
     }
 }

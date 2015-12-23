@@ -12,17 +12,25 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 /**
+ * Classe pour gérer l'enregistrement des parties
  *
  * @author Sacha
  */
 public class Enregistrement {
 
+    /**
+     * Méthode qui enregistre un plateau de jeu
+     *
+     * @param nomFichier un String représentant le nom du fichier (sans
+     * l'extension .ser)
+     * @param plateau le PlateauDeJeu à enregistrer
+     */
     public static void enregistrer(String nomFichier, PlateauDeJeu plateau) {
 
         ObjectOutputStream oos = null;
 
         try {
-            final FileOutputStream fichier = new FileOutputStream("Enregistrements/" + nomFichier + ".ser");
+            final FileOutputStream fichier = new FileOutputStream(nomFichier + ".ser");
             oos = new ObjectOutputStream(fichier);
             oos.writeObject(plateau);
             oos.flush();
@@ -40,11 +48,18 @@ public class Enregistrement {
         }
     }
 
+    /**
+     * Méthode qui charge un plateau de jeu
+     *
+     * @param nomFichier un String représentant le nom du fichier à charger
+     * (sans l'extension .ser)
+     * @return un PlateauDeJeu
+     */
     public static PlateauDeJeu charger(String nomFichier) {
         ObjectInputStream ois = null;
         PlateauDeJeu plateau = null;
         try {
-            final FileInputStream fichier = new FileInputStream("Enregistrements/" + nomFichier + ".ser");
+            final FileInputStream fichier = new FileInputStream(nomFichier + ".ser");
             ois = new ObjectInputStream(fichier);
             plateau = (PlateauDeJeu) ois.readObject();
         } catch (final java.io.IOException e) {
@@ -61,6 +76,6 @@ public class Enregistrement {
             }
             return plateau;
         }
-        
+
     }
 }
