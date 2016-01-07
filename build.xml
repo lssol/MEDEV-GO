@@ -1,15 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="Jeu de GO" default="build" basedir=".">
+
 	<description>MEDEV - Projet Jeu de GO</description>
+
 	<property name="src.location" location="src"/>
 	<property name="build.location" location="build"/>
 	<property name="test.location" location="test"/>
-	<property name="report.dir" location="report" />
+	<property name="report.location" location="report" />
 	<property name="lib.location" location="lib"/>
 	<property name="classes.location" location="build/classes"/>
 	<property name="bin.location" location="bin"/>
+	<property name="javadoc.location" location="javadoc"/>
 
-	<target name="init">
+	<target name="init"
+		description="Créer les dossiers nécessaires, vérifier les dépendances, télécharger les librairies">
 		<tstamp/>
 		<mkdir dir="${build.location}"/>
 		<mkdir dir="${classes.location}"/>
@@ -20,53 +24,67 @@
 				<available file="${test.location}" type="dir"/>
 			</and>
 		</condition>
-		
 		<get src="http://central.maven.org/maven2/junit/junit/4.4/junit-4.4.jar"
-				    dest="${lib.location}" 
-				    verbose="true"
-				    usetimestamp="true"/>
-
+			dest="${lib.location}" 
+			verbose="true"
+			usetimestamp="true"/>
 	</target>
 
-	<target name="build.classes" description="Compiler les tests unitaires" depends="init" if="src.build.test.available">
-
-		<javac srcdir="${src.location}" destdir="${classes.location}" includeantruntime="false"/>		
+	<target name="build.classes"
+		description="Compiler les sources"
+		depends="init" if="src.build.test.available">
+		<javac srcdir="${src.location}" destdir="${classes.location}" includeantruntime="false"/>
+		<!--
+		<javac srcdir="${test.location}" destdir="${classes.location}" includeantruntime="false"/>
+			<classpath>
+				<pathelement location="${lib.location}/junit-4.4.jar"/>
+			</classpath>
+		-->
+		<echo message="Fichiers .class créés."/>		
 	</target>
 
-	<!-- Run jUnit -->
-	<target name="junit" depends="build.classes">
-	<mkdir dir="${report.dir}" />
-	
-	  <junit printsummary="yes" haltonfailure="no">
-	
-		<classpath location="${classes.location}" />
-			
-		<formatter type="xml" />
-		<batchtest fork="yes" todir="${report.dir}">
-			<fileset dir="${test.location}"/>
-		</batchtest>
-			
-	  </junit>
+	<target name="junit"
+		description="Lancer les tests unitaires"
+		depends="build.classes">
+		<mkdir dir="${report.location}" />
+		<!--
+		<junit printsummary="yes" haltonfailure="yes">
+			<classpath>
+				<pathelement path="${classes.location}"/>
+				<pathelement location="${lib.location}/junit-4.4.jar"/>
+			</classpath>
+			<formatter type="plain"/>
+			<batchtest fork="yes" todir="${report.location}">
+				<fileset dir="${test.location}"/>
+			</batchtest>	
+		</junit>
+		-->
 	</target>
 
- 	<target name="build" description="Compiler les sources en .jar" depends="junit">
-
+ 	<target name="build"
+		description="Compiler les sources en .jar"
+		depends="junit">
 	    <mkdir dir="${bin.location}"/>
-
 	    <jar jarfile="${bin.location}/GO-${DSTAMP}.jar" basedir="${classes.location}"> 
 		    <manifest>
 			    <attribute name="Main-Class" value="jeugo.JeuGO"/>
 		    </manifest>
 	    </jar>
-
+		<echo message="Le .jar est situé dans ${bin.location}/GO-${DSTAMP}."/>
 	</target>
 
-	<target name="javadoc" description="Générer la javadoc" depends="junit">
+	<target name="javadoc"
+		description="Générer la javadoc"
+		depends="junit">
+		<mkdir dir="${javadoc.location}"/>
+		<javadoc sourcepath="${src.location}" destdir="${javadoc.location}"/>
+		<echo message="La javadoc est située dans ${javadoc.location}."/>
 	</target>
 
-	<target name="sonar" depends="junit">
-		<pathelement path="/home/solenemoreau/Documents/ECN/EI3/MEDEV/TP5/sonar-runner-2.4/bin/sonar-runner"/>
-		<echo message="Analyse SonarQube lancée"/>
-	</target> 
+	<target name="sonar"
+		depends="junit">
+		<pathelement location="/home/solenemoreau/Documents/ECN/EI3/MEDEV/TP5/sonar-runner-2.4/bin/sonar-runner"/>
+		<echo message="Charger http://localhost:9000/ dans un navigateur pour voir l'analyse du code."/>
+	</target>
 
 </project>
