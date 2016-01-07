@@ -4,7 +4,6 @@
 	<property name="src.location" location="src"/>
 	<property name="build.location" location="build"/>
 	<property name="test.location" location="test"/>
-	<property name="lib.location" location="lib"/>
 
 	<target name="init">
 		<tstamp/>
@@ -16,12 +15,6 @@
 				<available file="${test.location}" type="dir"/>
 			</and>
 		</condition>
-		
-		<get src="http://central.maven.org/maven2/junit/junit/4.4/junit-4.4.jar"
-				    dest="${lib}" 
-				    verbose="true"
-				    usetimestamp="true"/>
-
 	</target>
 
 	<target name="build.test" description="Compiler les tests unitaires" depends="init" if="src.build.test.available">
