@@ -4,11 +4,8 @@
 	<property name="src.location" location="src"/>
 	<property name="build.location" location="build"/>
 	<property name="test.location" location="test"/>
-<<<<<<< HEAD
 	<property name="report.dir" location="report" />
-=======
 	<property name="lib.location" location="lib"/>
->>>>>>> 35c74223208dfe2126282fb1309f9d6c4495d0a6
 
 	<target name="init">
 		<tstamp/>
