@@ -6,10 +6,12 @@
 	<property name="test.location" location="test"/>
 	<property name="report.dir" location="report" />
 	<property name="lib.location" location="lib"/>
+	<property name="classes.location" location="build/classes"/>
 
 	<target name="init">
 		<tstamp/>
 		<mkdir dir="${build.location}"/>
+		<mkdir dir="${classes.location}"/>
 		<condition property="src.build.test.available">
 			<and>
 				<available file="${src.location}" type="dir"/>
@@ -25,23 +27,18 @@
 
 	</target>
 
-	<target name="build.test" description="Compiler les tests unitaires" depends="init" if="src.build.test.available">
+	<target name="build.classes" description="Compiler les tests unitaires" depends="init" if="src.build.test.available">
 
-	<mkdir dir="${build.location}/Classes/src"/>
-	<!--<mkdir dir="${build.location}/Classes/test"/>-->
-		<javac srcdir="${src.location}" destdir="${build.location}/Classes/src" includeantruntime="false"/>
-		<!--<javac srcdir="${test.location}" destdir="${build.location}/Classes/test"/>-->
-		
+		<javac srcdir="${src.location}" destdir="${classes.location}" includeantruntime="false"/>		
 	</target>
 
-		<!-- Run jUnit -->
-	<target name="junit" depends="build.test">
+	<!-- Run jUnit -->
+	<target name="junit" depends="build.classes">
 	<mkdir dir="${report.dir}" />
 	
 	  <junit printsummary="yes" haltonfailure="no">
 	
-		<classpath refid="test.path" />
-		<classpath location="${build.location}/Classes/src" />
+		<classpath location="${classes.location}" />
 			
 		<formatter type="xml" />
 		<batchtest fork="yes" todir="${report.dir}">
