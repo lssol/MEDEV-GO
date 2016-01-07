@@ -36,5 +36,6 @@
 	</target>
 
 	<target name="sonar-runner" depends="run.test" if="run.test.ok">
+		<property name="sonar.jdbc.url" value="
 	</target>
 </project>
