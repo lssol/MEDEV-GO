@@ -55,7 +55,9 @@
 	<target name="javadoc" description="Générer la javadoc" depends="junit">
 	</target>
 
-	<target name="sonar-runner" depends="junit">
+	<target name="sonar" depends="junit">
+		<pathelement path="/home/solenemoreau/Documents/ECN/EI3/MEDEV/TP5/sonar-runner-2.4/bin/sonar-runner"/>
+		<echo message="Analyse SonarQube lancée"/>
 	</target> 
 
 </project>
