@@ -16,3 +16,5 @@ manifest.mf
 GO.iml
 .idea
 /build/
+*.ser
+*~
