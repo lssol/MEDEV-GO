@@ -7,6 +7,7 @@
 	<property name="report.dir" location="report" />
 	<property name="lib.location" location="lib"/>
 	<property name="classes.location" location="build/classes"/>
+	<property name="bin.location" location="bin"/>
 
 	<target name="init">
 		<tstamp/>
@@ -49,7 +50,15 @@
 	</target>
 
  	<target name="build" description="Compiler les sources en .jar" depends="junit">
-		<echo message="OK"/>
+
+	    <mkdir dir="${bin.location}"/>
+
+	    <jar jarfile="${bin.location}/GO-${DSTAMP}.jar" basedir="${classes.location}"> 
+		    <manifest>
+			    <attribute name="Main-Class" value="jeugo.JeuGO"/>
+		    </manifest>
+	    </jar>
+
 	</target>
 
 	<target name="javadoc" description="Générer la javadoc" depends="junit">
