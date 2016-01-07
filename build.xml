@@ -21,7 +21,7 @@
 		</condition>
 		
 		<get src="http://central.maven.org/maven2/junit/junit/4.4/junit-4.4.jar"
-				    dest="${lib}" 
+				    dest="${lib.location}" 
 				    verbose="true"
 				    usetimestamp="true"/>
 
