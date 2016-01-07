@@ -17,22 +17,24 @@
 		</condition>
 	</target>
 
-	<target name="build.test" description="Compiler les tests unitaires" depends"init" if="src.build.test.available">
+	<target name="build.test" description="Compiler les tests unitaires" depends="init" if="src.build.test.available">
+		<javac srcdir="${src.location}" destdir="${build.location}"/>
 		<condition property="build.test.ok">
 		</condition>
 	</target>
 
-	<target name="run.test" description="Lancer les tests unitaires" depends"build.test" if="build.test.ok">
+	<target name="run.test" description="Lancer les tests unitaires" depends="build.test" if="build.test.ok">
 		<condition property="run.test.ok">
 		</condition>
 	</target>
 
-	<target name="build.src" description="Compiler les sources" depends="run.test" if="run.test.ok">
-		<echo message="Building the application..."/>
+	<target name="build" description="Compiler les sources en .jar" depends="run.test" if="run.test.ok">
 		<javac srcdir="${src.location}" destdir="${build.location}"/>
-		<echo message="Done!"/>
 	</target>
 
 	<target name="javadoc" description="Générer la javadoc" depends="run.test" if="run.test.ok">
+	</target>
+
+	<target name="sonar-runner" depends="run.test" if="run.test.ok">
 	</target>
 </project>
