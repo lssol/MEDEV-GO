@@ -6,17 +6,31 @@
 	<property name="src.location" location="src"/>
 	<property name="build.location" location="build"/>
 	<property name="test.location" location="test"/>
+	<property name="build.tests.location" location="build/tests"/>
 	<property name="report.location" location="report" />
 	<property name="lib.location" location="lib"/>
-	<property name="classes.location" location="build/classes"/>
+	<property name="build.classes.location" location="build/classes"/>
 	<property name="bin.location" location="bin"/>
 	<property name="javadoc.location" location="javadoc"/>
+	
+	<path id="junit.path">
+		<pathelement location="${lib.location}/junit-4.4.jar"/>
+	</path>
+	
+	<target name="clean"
+		description="Supprimer le dossier build, bin et report actuels">
+		<delete dir="${build.location}"/>
+		<delete dir="${report.location}"/>
+		<delete dir="${bin.location}"/>
+	</target>
 
 	<target name="init"
-		description="Créer les dossiers nécessaires, vérifier les dépendances, télécharger les librairies">
+		description="Créer les dossiers nécessaires, vérifier les dépendances, télécharger les librairies"
+		depends="clean">
 		<tstamp/>
 		<mkdir dir="${build.location}"/>
-		<mkdir dir="${classes.location}"/>
+		<mkdir dir="${build.classes.location}"/>
+		<mkdir dir="${build.tests.location}"/>
 		<condition property="src.build.test.available">
 			<and>
 				<available file="${src.location}" type="dir"/>
@@ -33,13 +47,15 @@
 	<target name="build.classes"
 		description="Compiler les sources"
 		depends="init" if="src.build.test.available">
-		<javac srcdir="${src.location}" destdir="${classes.location}" includeantruntime="false"/>
-		<!--
-		<javac srcdir="${test.location}" destdir="${classes.location}" includeantruntime="false"/>
+		<javac srcdir="${src.location}" destdir="${build.classes.location}" includeantruntime="false">
+			<classpath refid="junit.path"/>
+		</javac>
+		<javac srcdir="${test.location}" destdir="${build.tests.location}" includeantruntime="false">
+			<classpath refid="junit.path"/>
 			<classpath>
-				<pathelement location="${lib.location}/junit-4.4.jar"/>
+				<pathelement path="${build.classes.location}"/>
 			</classpath>
-		-->
+		</javac>
 		<echo message="Fichiers .class créés."/>		
 	</target>
 
@@ -47,25 +63,24 @@
 		description="Lancer les tests unitaires"
 		depends="build.classes">
 		<mkdir dir="${report.location}" />
-		<!--
-		<junit printsummary="yes" haltonfailure="yes">
+		<junit printsummary="yes" fork="true" haltonfailure="yes">
+			<classpath refid="junit.path"/>
 			<classpath>
-				<pathelement path="${classes.location}"/>
-				<pathelement location="${lib.location}/junit-4.4.jar"/>
+				<pathelement path="${build.tests.location}"/>
+				<pathelement path="${build.classes.location}"/>
 			</classpath>
 			<formatter type="plain"/>
-			<batchtest fork="yes" todir="${report.location}">
+			<batchtest todir="${report.location}">
 				<fileset dir="${test.location}"/>
 			</batchtest>	
 		</junit>
-		-->
 	</target>
 
  	<target name="build"
 		description="Compiler les sources en .jar"
 		depends="junit">
 	    <mkdir dir="${bin.location}"/>
-	    <jar jarfile="${bin.location}/GO-${DSTAMP}.jar" basedir="${classes.location}"> 
+	    <jar jarfile="${bin.location}/GO-${DSTAMP}.jar" basedir="${build.classes.location}"> 
 		    <manifest>
 			    <attribute name="Main-Class" value="jeugo.JeuGO"/>
 		    </manifest>
@@ -83,7 +98,7 @@
 
 	<target name="sonar"
 		depends="junit">
-		<pathelement location="/home/solenemoreau/Documents/ECN/EI3/MEDEV/TP5/sonar-runner-2.4/bin/sonar-runner"/>
+		<exec executable="/home/solenemoreau/Documents/ECN/EI3/MEDEV/TP5/sonar-runner-2.4/bin/sonar-runner"/>
 		<echo message="Charger http://localhost:9000/ dans un navigateur pour voir l'analyse du code."/>
 	</target>
 
